@@ -1,0 +1,65 @@
+/*Estilo da fonte*/
+body {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Responsividade*/
+@media (max-width: 600px) {
+  section {
+    -webkit-flex-direction: column;
+    flex-direction: column;
+  }
+}
+
+.navbar-gradient {
+    background: linear-gradient(#d4c81d, #fffffc); /* Gradiente horizontal */
+    color: white;
+  }
+
+  .navbar-gradient a {
+    color: rgb(0, 0, 0); /*cor do texto*/
+  }
+
+  .navbar-gradient a:hover {
+    color: #ffc107; /* cor do texto quando o mouse esta em cima*/
+  }
+  .footer-gradient {
+    background: linear-gradient(#fffffc, #d4c81d); /* Gradiente horizontal */
+    color: rgb(0, 0, 0);
+  }
+
+  .footer-gradient a {
+    color: rgb(0, 0, 0); /* Certifique-se de que os links fiquem visíveis */
+  }
+
+  .footer-gradient a:hover {
+    color: #ffc107; /* Adiciona um efeito hover */
+  }
+  .btn-top {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    display: none;
+    z-index: 1000;
+    background-color: #ffe600;
+    color: #000;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+  /* Estilo para o botão de voltar ao topo */
+
+  
+  #back-to-top:hover {
+    background-color: #000000;
+  }
+
+.conteudo {
+  margin-left: 250px;
+  padding: 20px;
+}
+
