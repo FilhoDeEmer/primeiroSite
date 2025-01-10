@@ -7,6 +7,8 @@
   <title>Loja</title>
   <!-- Bootstrap CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+
   <link rel="icon" type="image/png" href="https://plpstore.com.br/img/logo.png">
   <!-- Meu CSS -->
   <link rel="stylesheet" href="styles.css">
@@ -15,123 +17,149 @@
 <body>
   <header>
     <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-gradient">
+    <nav class="navbar bg-body-tertiary navbar-gradient">
       <div class="container-fluid">
-        <a class="navbar-brand" href="#">
+        <a class="navbar-brand" href="#" data-target="home" id="logo-link">
           <img src="https://plpstore.com.br/img/logo.png" alt="Logo" width="50" height="50"
             class="d-inline-block align-text">
           PLP Store
         </a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-          aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
+        <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar"
+          aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
+          <span class="bi-person-circle"> Login</span>
         </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav me-auto">
-            <li class="nav-item">
-              <a class="nav-link" href="#produtos">Produtos</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#contato">Contato</a>
-            </li>
-          </ul>
-        <ul class="navbar-nav">
-          <li class="nav-item">
-            <button class="btn btn-outline-dark d-lg-none" type="button" data-bs-toggle="offcanvas"
-              data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
-              <i class="bi bi-person-circle"></i> Login
-            </button>
-            <!-- Offcanvas Menu -->
-            <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
-              <div class="offcanvas-header">
-                <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Login</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+
+        <!-- Offcanvas Menu -->
+        <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Login</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <form>
+              <div class="mb-3">
+                <label for="email" class="form-label">Email</label>
+                <input type="email" class="form-control" id="email" placeholder="seuemail@exemplo.com">
               </div>
-              <div class="offcanvas-body">
-                <form>
-                  <div class="mb-3">
-                    <label for="email" class="form-label">Email</label>
-                    <input type="email" class="form-control" id="email" placeholder="seuemail@exemplo.com">
-                  </div>
-                  <div class="mb-3">
-                    <label for="password" class="form-label">Senha</label>
-                    <input type="password" class="form-control" id="password">
-                  </div>
-                  <button type="submit" class="btn btn-primary w-100">Entrar</button>
-                </form>
-                <hr>
-                <p class="text-center">
-                  Ainda não tem uma conta? <a href="#">Cadastre-se</a>
-                </p>
+              <div class="mb-3">
+                <label for="password" class="form-label">Senha</label>
+                <input type="password" class="form-control" id="password">
               </div>
-            </div>
-          </li>
-        </ul>
+              <button type="submit" class="btn btn-primary w-100">Entrar</button>
+            </form>
+            <hr>
+            <p class="text-center">
+              Ainda não tem uma conta? <a href="#">Cadastre-se</a>
+            </p>
+          </div>
+        </div>
+
       </div>
-    </div>
-  </nav>
-</header>
+    </nav>
+  </header>
 
   <div class="container-fluid">
-    <dic class="row">
+    <div class="row">
       <!-- Menu lateral -->
       <nav class="col-md-3 col-lg-2 d-md-block bg-light sidebar">
         <div class="position-sticky">
           <ul class="list-group list-group-flush">
-            <li class="list-group-item">An item</li>
-            <li class="list-group-item">A second item</li>
-            <li class="list-group-item">Códigos TCG Live</li>
-            <li class="list-group-item">Proximas coleções</li>
+            <!-- Dropdown Menu -->
+            <!-- Dropdown Menu - Coleções -->
+            <li class="list-group-item">
+              <button class="btn btn-toggle align-items-center rounded collapsed w-100 text-start"
+                data-bs-toggle="collapse" data-bs-target="#submenu1" aria-expanded="false">
+                Coleções
+              </button>
+              <div class="collapse" id="submenu1">
+                <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                  <li><a href="#" class="list-group-item list-group-item-action">Coleção 1</a></li>
+                  <li><a href="#" class="list-group-item list-group-item-action">Coleção 2</a></li>
+                  <li><a href="#" class="list-group-item list-group-item-action">Coleção 3</a></li>
+                </ul>
+              </div>
+            </li>
+            <!-- Dropdown Menu - Produtos -->
+            <li class="list-group-item">
+              <button class="btn btn-toggle align-items-center rounded collapsed w-100 text-start"
+                data-bs-toggle="collapse" data-bs-target="#submenu2" aria-expanded="false">
+                Produtos
+              </button>
+              <div class="collapse" id="submenu2">
+                <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                  <li><a href="#" class="list-group-item list-group-item-action">Booster Avulsos</a></li>
+                  <li><a href="#" class="list-group-item list-group-item-action">Booster Box</a></li>
+                  <li><a href="#" class="list-group-item list-group-item-action">Triple Pack</a></li>
+                  <li><a href="#" class="list-group-item list-group-item-action">Quadra Pack</a></li>
+                  <li><a href="#" class="list-group-item list-group-item-action">ETB Treinador Avançado</a></li>
+
+                </ul>
+              </div>
+            </li>
+
+            <a class="list-group-item btn-toggle list-group-item-action menu-item" href="#"
+              data-target="codigos">Códigos TCG Live</a>
+            <a class="list-group-item btn-toggle list-group-item-action menu-item" href="#"
+              data-target="proximas-colecoes">Próximas Coleções</a>
+
+
+
           </ul>
         </div>
       </nav>
-      <!--Conteudo Principal -->
-      <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
-        <!-- Barra de Busca -->
+
+      <!-- Conteúdo Principal -->
+      <main id="conteudo-principal" class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
         <div class="mb-3 py-3">
           <form class="d-flex" role="search">
             <input class="form-control me-2" type="search" placeholder="Buscar na PLP Store" aria-label="search">
             <button class="btn btn-outline-success" type="submit">Buscar</button>
           </form>
         </div>
-        <!-- Banner -->
-        <div class="text-center py-2">
-          <h1>Bem-vindo à PLP Store</h1><br>
-          <p>A sua loja de Pokémon TCG</p><br>
-          <a href="#produtos" class="btn btn-warning mt-3">Ver Produtos</a>
-        </div>
-        <!-- Produtos -->
-        <section id="produtos" class="py-5">
+        <!-- Área inicial de boas-vindas -->
+        <section id="home" class="conteudo-ativo">
+          <div class="text-center py-2"
+            style="background-image: url('https://plpstore.com.br/img/categorias/19-09-2024-13-15-29-coroaCaegoria.png'); background-size: cover;background-position: center;">
+
+            <h1 class="mt-3">Bem-vindo à PLP Store</h1>
+            <p class="lead">A sua loja de Pokémon TCG</p>
+            <a href="#" data-target="produtos" class="btn btn-warning mt-3">Ver Produtos</a>
+          </div>
           <div class="container">
-            <h2 class="text-center mb-4">Produtos em destaque!</h2>
-            <div class="row">
+            <h2 class="text-center mb-4">Produtos em Destaque</h2>
+            <div class="row g-4">
+              <!-- Produto 1 -->
               <div class="col-md-4">
-                <div class="card">
-                  <img src="https://plpstore.com.br/img/produtos/036-191%20SSP.png" class="card-img-top"
+                <div class="card h-100">
+                  <img src="https://plpstore.com.br/img/produtos/239-191%20SSP.png" class="card-img-top"
                     alt="Produto 1">
-                  <div class="card-body">
+                  <div class="card-body text-center">
                     <h5 class="card-title">Produto 1</h5>
                     <p class="card-text">Descrição breve do produto.</p>
                     <a href="#" class="btn btn-primary">Comprar</a>
                   </div>
                 </div>
               </div>
+
+              <!-- Produto 2 -->
               <div class="col-md-4">
-                <div class="card">
-                  <img src="https://plpstore.com.br/img/produtos/036-191%20SSP.png" class="card-img-top"
+                <div class="card h-100">
+                  <img src="https://plpstore.com.br/img/produtos/239-191%20SSP.png" class="card-img-top"
                     alt="Produto 2">
-                  <div class="card-body">
+                  <div class="card-body text-center">
                     <h5 class="card-title">Produto 2</h5>
                     <p class="card-text">Descrição breve do produto.</p>
                     <a href="#" class="btn btn-primary">Comprar</a>
                   </div>
                 </div>
               </div>
+
+              <!-- Produto 3 -->
               <div class="col-md-4">
-                <div class="card">
-                  <img src="https://plpstore.com.br/img/produtos/036-191%20SSP.png" class="card-img-top"
+                <div class="card h-100">
+                  <img src="https://plpstore.com.br/img/produtos/239-191%20SSP.png" class="card-img-top"
                     alt="Produto 3">
-                  <div class="card-body">
+                  <div class="card-body text-center">
                     <h5 class="card-title">Produto 3</h5>
                     <p class="card-text">Descrição breve do produto.</p>
                     <a href="#" class="btn btn-primary">Comprar</a>
@@ -141,15 +169,83 @@
             </div>
           </div>
         </section>
+        <!-- Produtos -->
+        <section id="produtos" class="conteudo-escondido">
+          <div class="container">
+            <h2 class="text-center mb-4">Produtos</h2>
+            <div class="row g-4">
+              <!-- Produto 1 -->
+              <div class="col-md-4">
+                <div class="card h-100">
+                  <img src="https://plpstore.com.br/img/produtos/036-191%20SSP.png" class="card-img-top"
+                    alt="Produto 1">
+                  <div class="card-body text-center">
+                    <h5 class="card-title">Produto 1</h5>
+                    <p class="card-text">Descrição breve do produto.</p>
+                    <a href="#" class="btn btn-primary">Comprar</a>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Produto 2 -->
+              <div class="col-md-4">
+                <div class="card h-100">
+                  <img src="https://plpstore.com.br/img/produtos/036-191%20SSP.png" class="card-img-top"
+                    alt="Produto 2">
+                  <div class="card-body text-center">
+                    <h5 class="card-title">Produto 2</h5>
+                    <p class="card-text">Descrição breve do produto.</p>
+                    <a href="#" class="btn btn-primary">Comprar</a>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Produto 3 -->
+              <div class="col-md-4">
+                <div class="card h-100">
+                  <img src="https://plpstore.com.br/img/produtos/036-191%20SSP.png" class="card-img-top"
+                    alt="Produto 3">
+                  <div class="card-body text-center">
+                    <h5 class="card-title">Produto 3</h5>
+                    <p class="card-text">Descrição breve do produto.</p>
+                    <a href="#" class="btn btn-primary">Comprar</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Conteúdo de coleções -->
+        <section id="colecoes" class="conteudo-escondido">
+          <h2 class="mb-4">Coleções</h2>
+          <p>Exibição de coleções disponíveis na loja.</p>
+          <!-- Adicione aqui o conteúdo relacionado a coleções -->
+        </section>
+
+        <!-- Conteúdo de produtos -->
+        <section id="produtos-detail" class="conteudo-escondido">
+          <h2 class="mb-4">Produtos</h2>
+          <p>Exibição de produtos disponíveis na loja.</p>
+          <!-- Adicione aqui os produtos -->
+        </section>
+
+        <!-- Conteúdo de códigos TCG Live -->
+        <section id="codigos" class="conteudo-escondido">
+          <h2 class="mb-4">Códigos TCG Live</h2>
+          <p>Adicione aqui os códigos TCG Live disponíveis.</p>
+        </section>
+
+        <!-- Conteúdo de próximas coleções -->
+        <section id="proximas-colecoes" class="conteudo-escondido">
+          <h2 class="mb-4">Próximas Coleções</h2>
+          <p>Informações sobre coleções futuras.</p>
+        </section>
       </main>
+
+    </div>
   </div>
-  </div>
-
-
-
-
-  <!-- Contato -->
-  <section id="contato" class="bg-light py-5">
+  <class id="contato" class="bg-light py-5 conteudo-ativo">
     <div class="container">
       <h2 class="text-center mb-4">Contato</h2>
       <form action="#" method="POST">
@@ -170,11 +266,15 @@
         <button type="submit" class="btn btn-primary">Enviar</button>
       </form>
     </div>
-  </section>
+  </class>
 
-  <footer class="footer-gradient text-white text-center py-3">
+
+  <footer class="footer-gradient text-center py-3">
+    <!-- Contato -->
+
     <p>&copy; 2025 PLP Store. Todos os direitos reservados. <a href="#" class="text-warning">Política de Privacidade</a>
       | <a href="#" class="text-warning">Termos de Serviço</a></p>
+
   </footer>
 
   <!-- Botão de voltar ao topo -->
@@ -184,6 +284,8 @@
 
   <!-- Bootstrap JS -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+
   <script>
     // Mostrar/esconder botão de voltar ao topo
     const backToTopButton = document.getElementById('back-to-top');
@@ -200,6 +302,55 @@
       window.scrollTo({ top: 0, behavior: 'smooth' });
     });
   </script>
+  <script>
+    document.getElementById('logo-link').addEventListener('click', function (e) {
+      e.preventDefault(); // Impede o comportamento padrão do link.
+
+      // Esconde todas as seções.
+      document.querySelectorAll('section').forEach(section => {
+        section.classList.add('conteudo-escondido');
+        section.classList.remove('conteudo-ativo');
+      });
+
+      // Mostra apenas a seção inicial (home).
+      const homeSection = document.getElementById('home');
+      if (homeSection) {
+        homeSection.classList.add('conteudo-ativo');
+        homeSection.classList.remove('conteudo-escondido');
+      }
+    });
+  </script>
+
+  <!--Mudar pagina principal -->
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const menuItems = document.querySelectorAll(".menu-item");
+      const sections = document.querySelectorAll("main > section");
+
+      menuItems.forEach((item) => {
+        item.addEventListener("click", function (e) {
+          e.preventDefault();
+
+          const targetId = this.dataset.target;
+
+          // Esconde todas as seções
+          sections.forEach((section) => {
+            section.classList.add("conteudo-escondido");
+            section.classList.remove("conteudo-ativo");
+          });
+
+          // Mostra a seção correspondente
+          const targetSection = document.getElementById(targetId);
+          if (targetSection) {
+            targetSection.classList.remove("conteudo-escondido");
+            targetSection.classList.add("conteudo-ativo");
+          }
+        });
+      });
+    });
+
+  </script>
+
 </body>
 
 </html>

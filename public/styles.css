@@ -23,16 +23,21 @@ body {
   .navbar-gradient a:hover {
     color: #ffc107; /* cor do texto quando o mouse esta em cima*/
   }
+
+
+
   .footer-gradient {
     background: linear-gradient(#fffffc, #d4c81d); /* Gradiente horizontal */
     color: rgb(0, 0, 0);
   }
 
   .footer-gradient a {
+    text-decoration: none;
     color: rgb(0, 0, 0); /* Certifique-se de que os links fiquem visíveis */
   }
 
   .footer-gradient a:hover {
+    text-decoration: underline;
     color: #ffc107; /* Adiciona um efeito hover */
   }
   .btn-top {
@@ -51,12 +56,37 @@ body {
     justify-content: center;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   }
-  /* Estilo para o botão de voltar ao topo */
+
+  .btn-toggle {
+  background-color: #f8f9fa;
+  border: none;
+  font-weight: bold;
+}
+
+.btn-toggle:hover {
+  background-color: #e2e6ea;
+}
+
+.btn-toggle-nav a {
+  padding-left: 20px;
+}
+
+/* Esconde seções que não estão ativas */
+.conteudo-escondido {
+  display: none;
+}
+
+.conteudo-ativo {
+  display: block;
+}
 
   
-  #back-to-top:hover {
-    background-color: #000000;
-  }
+#back-to-top:hover {
+   background-color: #000000;
+}
+
+
+
 
 .conteudo {
   margin-left: 250px;
