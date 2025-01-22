@@ -40,6 +40,17 @@ body {
     text-decoration: underline;
     color: #ffc107; /* Adiciona um efeito hover */
   }
+
+  
+/* Estilo do carrossel de coleções*/
+.swiper {
+  width: 600px;
+  height: 300px;
+}
+
+  
+
+
   .btn-top {
     position: fixed;
     bottom: 20px;
@@ -91,5 +102,34 @@ body {
 .conteudo {
   margin-left: 250px;
   padding: 20px;
+}
+
+.card-title {
+  font-size: clamp(14px, 2vw, 18px); /* Adapta entre 14px e 18px com base no tamanho da tela */
+  line-height: 1.2; /* Melhor legibilidade */
+  overflow: hidden; /* Impede que transborde */
+  text-overflow: ellipsis; /* Adiciona reticências caso seja necessário */
+}
+
+.card {
+  width: 250px; /* Largura fixa */
+  height: 350px; /* Altura fixa */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* Espaçamento interno*/
+  margin: 0 auto; /* Centraliza o card dentro da coluna */
+  overflow: hidden; /* Evita transbordamentos */
+}
+
+.card-title {
+  font-size: 16px; /* Tamanho fixo da fonte do título */
+  overflow: hidden; /* Oculta excesso de texto */
+  text-overflow: ellipsis; /* Adiciona reticências para textos longos */
+  white-space: nowrap; /* Impede quebra de linha */
+}
+
+.card-img-top {
+  max-height: 200px; /* Altura fixa para a imagem */
+  object-fit: contain; /* Ajusta imagem dentro do espaço sem distorcer */
 }
 

@@ -1,0 +1,39 @@
+<nav class="navbar bg-body-tertiary navbar-gradient">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="/" data-target="home" id="logo-link">
+        <img src="https://plpstore.com.br/img/logo.png" alt="Logo" width="50" height="50"
+          class="d-inline-block align-text">
+        PLP Store
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar"
+        aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
+        <span class="bi-person-circle"> Login</span>
+      </button>
+
+      <!-- Offcanvas Menu -->
+      <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+        <div class="offcanvas-header">
+          <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Login</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+          <form>
+            <div class="mb-3">
+              <label for="email" class="form-label">Email</label>
+              <input type="email" class="form-control" id="email" placeholder="seuemail@exemplo.com">
+            </div>
+            <div class="mb-3">
+              <label for="password" class="form-label">Senha</label>
+              <input type="password" class="form-control" id="password">
+            </div>
+            <button type="submit" class="btn btn-primary w-100">Entrar</button>
+          </form>
+          <hr>
+          <p class="text-center">
+            Ainda não tem uma conta? <a href="#">Cadastre-se</a>
+          </p>
+        </div>
+      </div>
+
+    </div>
+  </nav>

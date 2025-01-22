@@ -1,0 +1,51 @@
+<nav class="col-md-3 col-lg-2 d-md-block bg-light sidebar">
+    <div class="position-sticky">
+        <ul class="list-group list-group-flush">
+            <!-- Dropdown Menu -->
+            <!-- Dropdown Menu - Coleções -->
+
+            <li class="list-group-item">
+                <button class="btn btn-toggle align-items-center rounded collapsed w-100 text-start"
+                    data-bs-toggle="collapse" data-bs-target="#submenu1" aria-expanded="false">
+                    Coleções
+                </button>
+                <div class="collapse" id="submenu1">
+                    <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                        <% colecoes.forEach((colecao)=> { %>
+                            <li><a id="<%= colecao.nome %>" href="/colecao/<%= colecao.nome %>"
+                                    class="list-group-item list-group-item-action">
+                                    <%= colecao.nome %>
+                                </a>
+                            </li>
+                            <% }) %>
+                    </ul>
+                </div>
+            </li>
+            <!-- Dropdown Menu - Produtos -->
+            <li class="list-group-item">
+                <button class="btn btn-toggle align-items-center rounded collapsed w-100 text-start"
+                    data-bs-toggle="collapse" data-bs-target="#submenu2" aria-expanded="false">
+                    Produtos
+                </button>
+                <div class="collapse" id="submenu2">
+                    <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                        <li><a href="#" class="list-group-item list-group-item-action">Booster Avulsos</a></li>
+                        <li><a href="#" class="list-group-item list-group-item-action">Booster Box</a></li>
+                        <li><a href="#" class="list-group-item list-group-item-action">Triple Pack</a></li>
+                        <li><a href="#" class="list-group-item list-group-item-action">Quadra Pack</a></li>
+                        <li><a href="#" class="list-group-item list-group-item-action">ETB Treinador Avançado</a></li>
+
+                    </ul>
+                </div>
+            </li>
+
+            <a class="list-group-item btn-toggle list-group-item-action menu-item" href="#"
+                data-target="codigos">Códigos TCG Live</a>
+            <a class="list-group-item btn-toggle list-group-item-action menu-item" href="#"
+                data-target="proximas-colecoes">Próximas Coleções</a>
+
+
+
+        </ul>
+    </div>
+</nav>

@@ -1,0 +1,53 @@
+<%- include('components/head') %>
+
+    <body>
+        <header>
+            <%- include('components/navbar') %>
+        </header>
+        <div class="container-fluid">
+            <div class="row">
+                <%- include('components/sidemenu') %>
+                    <!-- Conteúdo Principal Fixo-->
+                    <main id="conteudo-principal" class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+                        <div class="mb-3 py-3">
+                            <form class="d-flex" role="search">
+                                <input class="form-control me-2" type="search" placeholder="Buscar na PLP Store"
+                                    aria-label="search">
+                                <button class="btn btn-outline-success" type="submit">Buscar</button>
+                            </form>
+                        </div>
+                        <div class="container">
+                            <!-- <h2 class="text-center mb-4">Produtos em Destaque</h2> -->
+
+                            <div class="row g-3">
+                                <% allProducts.forEach((product) => { %>
+                                    <div class="col-md-3 col-sm-6 d-flex">
+                                        <div class="card text-center shadow-sm" style="width: 250px; height: 350px;">
+                                            <img src="<%= product.img_tcg || '/path/to/default-image.png' %>" 
+                                                 class="card-img-top p-2" 
+                                                 alt="<%= product.nome %>" 
+                                                 style="height: 200px; object-fit: contain;">
+                                            <div class="card-body d-flex flex-column justify-content-between">
+                                                <h5 class="card-title text-break" style="font-size: 16px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+                                                    <%= product.nome %>
+                                                </h5>
+                                                <p class="card-text">Preço: <strong>R$ <%= parseFloat(product.preco_comum).toFixed(2) %></strong></p>
+                                                <a href="#" class="btn btn-primary mt-auto">Comprar</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                <% }) %>
+                            </div>                            
+                        </div>
+                    </main>
+            </div>
+        </div>
+
+    </body>
+
+
+
+
+
+
+    <%- include('components/footer') %>
