@@ -20,7 +20,9 @@ allColections = [];
 app.get("/", async (req, res) => {
   try {
     const colecoes = await fetchColecoes();
-    res.render("index", { colecoes }); // Passa as coleções diretamente para a view
+    const destaque = await fetchDestauqe();
+    const banner = await fetchBanner();
+    res.render("index", { colecoes , destaque, banner }); // Passa as coleções diretamente para a view
   } catch (error) {
     res.status(500).send("Erro ao buscar coleções");
     console.error("Erro ao renderizar a página principal", error);
@@ -34,7 +36,22 @@ app.get("/colecao/:nomeColecao", async (req, res) => {
     const colecoes = await fetchColecoes();
     const colecaoId = await fetchColecao(nomeColecao);
     const allProducts = await fetchCarByColection(colecaoId);
-    res.render("colecao", { colecoes, allProducts }); // Passa as coleções diretamente para a view
+    
+
+    res.render("colecao", { colecoes, allProducts}); // Passa as coleções diretamente para a view
+  } catch (error) {
+    res.status(500).send("Erro ao buscar coleções");
+    console.error("Erro ao renderizar a página principal", error);
+  }
+});
+
+//Rota para uma produto especifica
+app.get("/produtos/:produtoId", async (req, res) => {
+  const idProduto = req.params.produtoId;
+  const colecoes = await fetchColecoes();
+  try {
+    const produto = await fetchProduto(idProduto);
+    res.render("productPage", {colecoes, produto }); // Passa as coleções diretamente para a view
   } catch (error) {
     res.status(500).send("Erro ao buscar coleções");
     console.error("Erro ao renderizar a página principal", error);
@@ -54,7 +71,34 @@ const fetchColecoes = async () => {
     throw error;
   }
 };
-fetchColecoes();
+// Função para buscar produtos em destaque
+const fetchDestauqe = async () => {
+  const produtos = Parse.Object.extend("produtos"); // aqui vai o nome da tabela
+  const query = new Parse.Query(produtos);
+  query.equalTo("destacar", true); 
+
+  try {
+    const results = await query.find();
+    return results.map((colecao) => colecao.toJSON()); // Retorna as coleções como JSON
+  } catch (error) {
+    console.error("Erro ao buscar produtos em destaque:", error);
+    throw error;
+  }
+};
+// Função para buscar produtos especifico
+const fetchProduto = async (produtoId) => {
+  const produtos = Parse.Object.extend("produtos"); // aqui vai o nome da tabela
+  const query = new Parse.Query(produtos);
+  query.equalTo("id_carta", produtoId); 
+
+  try {
+    const results = await query.find();
+    return results.map((colecao) => colecao.toJSON()); // Retorna as coleções como JSON
+  } catch (error) {
+    console.error("Erro ao buscar produtos em destaque:", error);
+    throw error;
+  }
+};
 
 //Função busca uma coleção especifica
 const fetchColecao = async (nomeColecao) => {
@@ -79,7 +123,23 @@ const fetchCarByColection = async (colecaoId) => {
   const produtos = Parse.Object.extend("produtos"); // aqui vai o nome da tabela
   const query = new Parse.Query(produtos);
   query.equalTo("colecao", parseInt(colecaoId)); // aqui vai o parametro de busca
+  query.ascending("id_carta"); // Ordena por id
   query.limit(250)
+
+  try {
+    const results = await query.find();
+    return results.map((produto) => produto.toJSON()); // Retorna como JSON
+  } catch (error) {
+    console.error("Erro ao buscar produto:", error);
+    throw error;
+  }
+};
+
+//buscar banner
+const fetchBanner = async () => {
+  const banner = Parse.Object.extend("img"); // aqui vai o nome da tabela
+  const query = new Parse.Query(banner);
+  query.equalTo("imgCode", "banner"); // aqui vai o parametro de busca
 
   try {
     const results = await query.find();

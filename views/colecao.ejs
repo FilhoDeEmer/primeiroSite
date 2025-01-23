@@ -1,52 +1,99 @@
 <%- include('components/head') %>
 
-    <body>
-        <header>
-            <%- include('components/navbar') %>
-        </header>
-        <div class="container-fluid">
-            <div class="row">
-                <%- include('components/sidemenu') %>
-                    <!-- Conteúdo Principal Fixo-->
-                    <main id="conteudo-principal" class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
-                        <div class="mb-3 py-3">
-                            <form class="d-flex" role="search">
-                                <input class="form-control me-2" type="search" placeholder="Buscar na PLP Store"
-                                    aria-label="search">
-                                <button class="btn btn-outline-success" type="submit">Buscar</button>
-                            </form>
-                        </div>
-                        <div class="container">
-                            <!-- <h2 class="text-center mb-4">Produtos em Destaque</h2> -->
 
-                            <div class="row g-3">
-                                <% allProducts.forEach((product) => { %>
-                                    <div class="col-6 col-md-4 col-lg-3 d-flex">
-                                        <div class="card text-center shadow-sm" style="width: 250px; height: 350px;">
-                                            <img src="<%= product.img_tcg || '/path/to/default-image.png' %>" 
-                                                 class="card-img-top p-2" 
-                                                 alt="<%= product.nome %>" 
-                                                 style="height: 200px; object-fit: contain;">
-                                            <div class="card-body d-flex flex-column justify-content-between">
-                                                <h5 class="card-title text-break" style="font-size: 16px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
-                                                    <%= product.nome %>
-                                                </h5>
-                                                <p class="card-text">Preço: <strong>R$ <%= parseFloat(product.preco_comum).toFixed(2) %></strong></p>
-                                                <a href="#" class="btn btn-primary mt-auto">Comprar</a>
-                                            </div>
+    <header>
+        <%- include('components/navbar') %>
+    </header>
+    <div class="container-fluid">
+        <div class="row">
+            <%- include('components/sidemenu') %>
+                <!-- Conteúdo Principal Fixo-->
+                <main id="conteudo-principal" class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+                    <div class="mb-3 py-3">
+                        <form class="d-flex" role="search">
+                            <input class="form-control me-2" type="search" placeholder="Buscar na PLP Store"
+                                aria-label="search">
+                            <button class="btn btn-outline-success" type="submit">Buscar</button>
+                        </form>
+                    </div>
+                    <div class="container">
+                        <div>
+                            <!-- Campo de busca Local -->
+                            <input type="text" id="filterInput" placeholder="Buscar da coleção"
+                                class="form-control mb-3" oninput="applyFilters()" />
+                        </div>
+                        <div>
+                            <input type="checkbox" id="stockFilter" class="form-check-input"
+                                onchange="filterByStock()" />
+                            <label for="stockFilter" class="form-check-label">Com estoque</label>
+                        </div>
+                        <br>
+
+                        <div class="row g-3">
+                            <% allProducts.forEach((product)=> { %>
+                                <div class="col-6 col-md-4 col-lg-3 d-flex product-card"
+                                    data-name="<%= product.nome.toLowerCase() %>"
+                                    data-stock="<%= product.est_comum > 0 ? 'in-stock' : 'out-of-stock' %>">
+                                    <div class="card text-center shadow-sm" style="width: 250px; height: 350px;">
+                                        <a href="/produtos/<%= product.id_carta %>">
+                                            <img src="<%= product.img_tcg ? product.img_tcg : '/img/tcg-card-back.jpg' %>"
+                                                class="card-img-top p-2 <%= product.est_comum === 0 ? 'grayscale' : '' %>"
+                                                style="height: 200px; object-fit: contain;"
+                                                href="/produtos/<%= product.id %>">
+                                        </a>
+                                        <div class="card-body d-flex flex-column justify-content-between">
+                                            <h5 class="card-title text-break"
+                                                style="font-size: 16px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+                                                <%= product.nome %>
+                                            </h5>
+                                            <h6 class="card-text">Preço: <strong>R$ <%=
+                                                        parseFloat(product.preco_comum).toFixed(2) %></strong></h6>
+                                            <b class="card-text">Un.: <strong>
+                                                    <%= product.est_comum %>
+                                                </strong></b>
+                                            <a href="#"
+                                                class="btn btn-primary mt-auto <%= product.est_comum === 0 ?  'disabled' : '' %>">Comprar</a>
                                         </div>
                                     </div>
+                                </div>
                                 <% }) %>
-                            </div>                            
                         </div>
-                    </main>
-            </div>
+                    </div>
+                </main>
         </div>
+    </div>
+    <p id="no-results-message" class="text-center text-muted" style="display: none;">Nenhum produto encontrado.</p>
 
     </body>
 
+    <script>
+        function applyFilters() {
+            const filter = document.getElementById("filterInput").value.toLowerCase();
+            const stockFilter = document.getElementById("stockFilter").checked;
+            const products = document.querySelectorAll(".product-card");
 
+            let hasVisibleProduct = false;
 
+            products.forEach((product) => {
+                const productName = product.dataset.name;
+                const inStock = product.dataset.stock === "in-stock";
+
+                if ((productName.includes(filter)) && (!stockFilter || inStock)) {
+                    product.style.display = "";
+                    hasVisibleProduct = true;
+                } else {
+                    product.style.display = "none";
+                }
+            });
+
+            // Mostra ou oculta a mensagem de "nenhum resultado"
+            document.getElementById("no-results-message").style.display = hasVisibleProduct ? "none" : "block";
+        }
+
+        // Atualizar os eventos dos inputs
+        document.getElementById("filterInput").addEventListener("input", applyFilters);
+        document.getElementById("stockFilter").addEventListener("change", applyFilters);
+    </script>
 
 
 
