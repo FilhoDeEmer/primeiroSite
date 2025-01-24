@@ -51,7 +51,7 @@ app.get("/produtos/:produtoId", async (req, res) => {
   const colecoes = await fetchColecoes();
   try {
     const produto = await fetchProduto(idProduto);
-    res.render("productPage", {colecoes, produto }); // Passa as coleções diretamente para a view
+    res.render("productPage", {colecoes,produto : produto[0] }); // Passa as coleções diretamente para a view
   } catch (error) {
     res.status(500).send("Erro ao buscar coleções");
     console.error("Erro ao renderizar a página principal", error);
