@@ -12,54 +12,51 @@ body {
 }
 
 .navbar-gradient {
-    background: linear-gradient(#d4c81d, #fffffc); /* Gradiente horizontal */
-    color: white;
-  }
+  background: linear-gradient(#d4c81d, #fffffc); /* Gradiente horizontal */
+  color: white;
+}
 
-  .navbar-gradient a {
-    color: rgb(0, 0, 0); /*cor do texto*/
-  }
+.navbar-gradient a {
+  color: rgb(0, 0, 0); /*cor do texto*/
+}
 
-  .navbar-gradient a:hover {
-    color: #ffc107; /* cor do texto quando o mouse esta em cima*/
-  }
+.navbar-gradient a:hover {
+  color: #ffc107; /* cor do texto quando o mouse esta em cima*/
+}
 
+.footer-gradient {
+  background: linear-gradient(#fffffc, #d4c81d); /* Gradiente horizontal */
+  color: rgb(0, 0, 0);
+}
 
+.footer-gradient a {
+  text-decoration: none;
+  color: rgb(0, 0, 0); /* Certifique-se de que os links fiquem visíveis */
+}
 
-  .footer-gradient {
-    background: linear-gradient(#fffffc, #d4c81d); /* Gradiente horizontal */
-    color: rgb(0, 0, 0);
-  }
+.footer-gradient a:hover {
+  text-decoration: underline;
+  color: #ffc107; /* Adiciona um efeito hover */
+}
 
-  .footer-gradient a {
-    text-decoration: none;
-    color: rgb(0, 0, 0); /* Certifique-se de que os links fiquem visíveis */
-  }
-
-  .footer-gradient a:hover {
-    text-decoration: underline;
-    color: #ffc107; /* Adiciona um efeito hover */
-  }
-
-  
 .btn-top {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    display: none;
-    z-index: 1000;
-    background-color: #ffe600;
-    color: #000;
-    border-radius: 50%;
-    width: 50px;
-    height: 50px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  }
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  display: none;
+  z-index: 1000;
+  background-color: #ffc107;
+  color: #000;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
 
-  .btn-toggle {
+.btn-toggle {
   background-color: #f8f9fa;
   border: none;
   font-weight: bold;
@@ -82,14 +79,12 @@ body {
   display: block;
 }
 
-  
 #back-to-top:hover {
-   background-color: #000000;
+  background-color: #000000;
 }
 
-
 body {
-  background-image: url('/public/img/604052347.jpg');
+  background-image: url("/public/img/604052347.jpg");
   background-size: auto;
   background-repeat: repeat;
   background-position: center;
@@ -97,17 +92,20 @@ body {
 }
 
 body::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(255, 255, 255, 0.95); /* Cor preta com 50% de transparência */
+  background-color: rgba(
+    255,
+    255,
+    255,
+    0.95
+  ); /* Cor preta com 50% de transparência */
   z-index: -1;
 }
-
-
 
 .conteudo {
   margin-left: 250px;
@@ -115,7 +113,11 @@ body::before {
 }
 
 .card-title {
-  font-size: clamp(14px, 2vw, 18px); /* Adapta entre 14px e 18px com base no tamanho da tela */
+  font-size: clamp(
+    14px,
+    2vw,
+    18px
+  ); /* Adapta entre 14px e 18px com base no tamanho da tela */
   line-height: 1.2; /* Melhor legibilidade */
   overflow: hidden; /* Impede que transborde */
   text-overflow: ellipsis; /* Adiciona reticências caso seja necessário */
@@ -157,6 +159,59 @@ body::before {
 
 @media (max-width: 768px) {
   .banner {
-      height: 200px;
+    height: 200px;
   }
+}
+
+.btn-orange {
+  background-color: #33b81e;
+  color: white;
+  border: none;
+  width: 40px; /* Largura fixa */
+  height: 40px; /* Altura fixa */
+  display: flex; /* Flexbox para alinhar conteúdo */
+  justify-content: center; /* Alinha o conteúdo horizontalmente */
+  align-items: center; /* Alinha o conteúdo verticalmente */
+  border-radius: 50%; /* Faz o botão redondo */
+
+  
+}
+.btn-plus {
+  font-size: 1.5em;
+  background-color: #102dc0;
+  color: white;
+  border: none;
+  width: 40px; /* Largura fixa */
+  height: 40px; /* Altura fixa */
+  display: flex; /* Flexbox para alinhar conteúdo */
+  justify-content: center; /* Alinha o conteúdo horizontalmente */
+  align-items: center; /* Alinha o conteúdo verticalmente */
+  border-radius: 50%; /* Faz o botão redondo */
+}
+.btn-minus {
+  font-size: 1.5em;
+  background-color: #b81e1e;
+  color: white;
+  border: none;
+  width: 40px; /* Largura fixa */
+  height: 40px; /* Altura fixa */
+  display: flex; /* Flexbox para alinhar conteúdo */
+  justify-content: center; /* Alinha o conteúdo horizontalmente */
+  align-items: center; /* Alinha o conteúdo verticalmente */
+  border-radius: 50%; /* Faz o botão redondo */
+}
+.btn-minus:hover {
+  background-color: #891818;
+}
+.btn-plus:hover {
+  background-color: #0f1385;
+}
+.btn-orange:hover {
+  background-color: #38850f;
+}
+.border-orange {
+  border-color: #ffc107;
+}
+.i-white {
+  color: #ffffff;
 }
