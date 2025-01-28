@@ -188,36 +188,7 @@ body::before {
 
   
 }
-.btn-plus {
-  font-size: 1.5em;
-  background-color: #102dc0;
-  color: white;
-  border: none;
-  width: 40px; /* Largura fixa */
-  height: 40px; /* Altura fixa */
-  display: flex; /* Flexbox para alinhar conteúdo */
-  justify-content: center; /* Alinha o conteúdo horizontalmente */
-  align-items: center; /* Alinha o conteúdo verticalmente */
-  border-radius: 50%; /* Faz o botão redondo */
-}
-.btn-minus {
-  font-size: 1.5em;
-  background-color: #b81e1e;
-  color: white;
-  border: none;
-  width: 40px; /* Largura fixa */
-  height: 40px; /* Altura fixa */
-  display: flex; /* Flexbox para alinhar conteúdo */
-  justify-content: center; /* Alinha o conteúdo horizontalmente */
-  align-items: center; /* Alinha o conteúdo verticalmente */
-  border-radius: 50%; /* Faz o botão redondo */
-}
-.btn-minus:hover {
-  background-color: #891818;
-}
-.btn-plus:hover {
-  background-color: #0f1385;
-}
+
 .btn-orange:hover {
   background-color: #38850f;
 }
@@ -226,4 +197,9 @@ body::before {
 }
 .i-white {
   color: #ffffff;
+}
+
+.custom-tooltip {
+  --bs-tooltip-bg: var(--bd-violet-bg);
+  --bs-tooltip-color: var(--bs-white);
 }

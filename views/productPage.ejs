@@ -8,78 +8,151 @@
                     <%- include ('components/sidemenu') %>
 
                         <main id="conteudo-principal" class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
-                            <div class="container mt-5">
+                            <div class="container-fluid mt-5">
                                 <div class="row">
                                     <!-- Imagem do Produto -->
-                                    <div class="col-md-6 text-center">
+                                    <div class="col-sm-12 col-md-4 col-lg-3">
                                         <img id="produto-img"
                                             src="<%= produto.img_tcg ? produto.img_tcg : 'https://tcg.pokemon.com/assets/img/global/tcg-card-back.jpg' %>"
                                             alt="Imagem do produto <%= produto.nome %>" class="img-fluid rounded">
                                     </div>
 
                                     <!-- Detalhes do Produto -->
-                                    <div class="col-md-6">
-                                        <h1>
+                                    <div class="col-md-8">
+                                        <p class="fs-2 text-center text-uppercase fw-bold">
                                             <%= produto.nome %>
-                                        </h1>
-                                        <p class="text-muted">Código do Produto: <%= produto.id_carta %>
-                                        </p>
-                                        <h2 class="text-success fw-bold" id="valorCarta">R$ <%=
-                                                parseFloat(produto.preco_comum).toFixed(2) %>
-                                        </h2>
-                                        <p>
-                                            <%= produto.descricao_longa ? produto.descricao_longa
-                                                : 'Descrição indisponível para este produto.' %>
                                         </p>
 
-                                        <!-- Estoque -->
-                                        <p>
-                                        <div class="btn-group dropend">
-                                            <button id="dropdownButton" type="button"
-                                                class="btn btn-sm btn-secondary dropdown-toggle"
-                                                data-bs-toggle="dropdown" aria-expanded="false">
-                                                <span id="tipo">Raridade</span>
-                                            </button>
-                                            <ul class="dropdown-menu">
-                                                <!-- Dropdown menu links -->
-                                                <li><a class="dropdown-item" href="#" data-stock="comum"
-                                                        data-price="<%= produto.preco_comum %>">Comum : <%=
-                                                            produto.est_comum %>
-                                                    </a></li>
-                                                <li><a class="dropdown-item" href="#" data-stock="reverse"
-                                                        data-price="<%= produto.preco_reverse %>">Reverse : <%=
-                                                            produto.est_reverse %></a></li>
-                                                <li><a class="dropdown-item" href="#" data-stock="pokeball"
-                                                        data-price="<%= produto.preco_pokeball %>">R. Pokeball : <%=
-                                                            produto.est_pokeball %></a></li>
-                                                <li><a class="dropdown-item" href="#" data-stock="masterball"
-                                                        data-price="<%= produto.preco_masterball %>">R. Masterball : <%=
-                                                            produto.est_masterball %></a></li>
+                                        <div class="table-responsive col-md-12">
+                                            <table class="table table-borderled table-sm table-hover">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Edição</th>
+                                                        <th>Estado</th>
+                                                        <th>Raridade</th>
+                                                        <th>Estq.</th>
+                                                        <th>Preço(R$)</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <% if (produto.est_comum> 0) { %>
+                                                        <tr>
+                                                            <td>
+                                                                <%= produto.id_carta %>
+                                                            </td>
+                                                            <td>
+                                                                <a>NM</a>
+                                                            </td>
+                                                            <td>Comum</td>
+                                                            <td>
+                                                                <%= produto.est_comum %>
+                                                            </td>
+                                                            <td>
+                                                                <%= parseFloat(produto.preco_comum).toFixed(2) %>
+                                                            </td>
+                                                            <td>
+                                                                <!-- Campo de entrada -->
+                                                                <input type="number" class="form-control text-center"
+                                                                    id="input-quantity-comum" value="1" min="1"
+                                                                    style="width: 75px; height: 30px; border-radius: 0%;">
+                                                            </td>
+                                                            <td>
+                                                                <button class="btn btn-sm btn-primary">Comprar</button>
+                                                            </td>
+                                                        </tr>
+                                                        <% } %>
+                                                            <% if (produto.est_reverse> 0) { %>
+                                                                <tr>
+                                                                    <td>
+                                                                        <%= produto.id_carta %>
+                                                                    </td>
+                                                                    <td>NM</td>
+                                                                    <td>Reverse</td>
+                                                                    <td>
+                                                                        <%= produto.est_reverse %>
+                                                                    </td>
+                                                                    <td>
+                                                                        <%=
+                                                                            parseFloat(produto.preco_reverse).toFixed(2)%>
+                                                                    </td>
+                                                                    <td>
+                                                                        <!-- Campo de entrada -->
+                                                                        <input type="number"
+                                                                            class="form-control text-center"
+                                                                            id="input-quantity-reverse" value="1"
+                                                                            min="1"
+                                                                            style="width: 75px; height: 30px; border-radius: 0%;">
+                                                                    </td>
+                                                                    <td>
+                                                                        <button
+                                                                            class="btn btn-sm btn-primary">Comprar</button>
+                                                                    </td>
+                                                                </tr>
+                                                                <% } %>
+                                                                    <% if (produto.est_pokeball> 0) { %>
+                                                                        <tr>
+                                                                            <td>
+                                                                                <%= produto.id_carta %>
+                                                                            </td>
+                                                                            <td>NM</td>
+                                                                            <td>Pokeball</td>
+                                                                            <td>
+                                                                                <%= produto.est_pokeball %>
+                                                                            </td>
+                                                                            <td>
+                                                                                <%= parseFloat(produto.preco_pokeball).toFixed(2)
+                                                                                    %>
+                                                                            </td>
+                                                                            <td>
+                                                                                <!-- Campo de entrada -->
+                                                                                <input type="number"
+                                                                                    class="form-control text-center"
+                                                                                    id="input-quantity-pokeball"
+                                                                                    value="1" min="1"
+                                                                                    style="width: 75px; height: 30px; border-radius: 0%;">
+                                                                            </td>
+                                                                            <td>
+                                                                                <button
+                                                                                    class="btn btn-sm btn-primary">Comprar</button>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <% } %>
+                                                                            <% if (produto.est_masterball> 0) { %>
+                                                                                <tr>
+                                                                                    <td>
+                                                                                        <%= produto.id_carta %>
+                                                                                    </td>
+                                                                                    <td>NM</td>
+                                                                                    <td>Masterball</td>
+                                                                                    <td>
+                                                                                        <%= produto.est_masterball %>
+                                                                                    </td>
+                                                                                    <td>
+                                                                                        <%= parseFloat(produto.preco_masterball).toFixed(2)
+                                                                                            %>
+                                                                                    </td>
 
-                                            </ul>
+                                                                                    <td>
+                                                                                        <!-- Campo de entrada -->
+                                                                                        <input type="number"
+                                                                                            class="form-control text-center"
+                                                                                            id="input-quantity-masterball"
+                                                                                            value="1" min="1"
+                                                                                            style="width: 75px; height: 30px; border-radius: 0%;">
+                                                                                    </td>
+
+                                                                                    <td>
+                                                                                        <button
+                                                                                            class="btn btn-sm btn-primary">Comprar</button>
+                                                                                    </td>
+                                                                                </tr>
+                                                                                <% } %>
+                                                </tbody>
+                                            </table>
+                                            <p class="text-muted">*NM = Near Mint(Praticamente nova)</p>
                                         </div>
-                                        <span id="disponibilidade">
-                                        </span>
-                                        </p>
 
-                                        <!-- Botão de Qnt. -->
-                                        <div class="d-flex align-items-center" style="max-width: 300px;">
-                                            <!-- Botão de diminuir -->
-                                            <button class="btn btn-minus btn-decrease px-3" type="button"
-                                                id="button-decrease">-</button>
 
-                                            <!-- Campo de entrada para a quantidade -->
-                                            <input type="text" class="form-control text-center border-orange mx-1"
-                                                id="input-quantity" value="1" min="1" readonly style="max-width: 50px;">
-
-                                            <!-- Botão de aumentar -->
-                                            <button class="btn btn-plus btn-increase px-3" type="button"
-                                                id="button-increase">+</button>
-
-                                            <!-- Botão adicionar -->
-                                            <button class="btn rounded-circle btn-orange ms-2" type="button"
-                                                id="buttonAdd"><i class="bi i-white bi-cart-plus-fill text bi-3x" id="buttonAdd"></i></button>
-                                        </div>
 
                                         <!-- Container da Toast -->
                                         <div class="toast-container position-fixed bottom-0 end-0 p-3">
@@ -104,34 +177,12 @@
                                         </div>
                                     </div>
                                 </div>
+
                             </div>
                         </main>
 
                 </div>
             </div>
-
-            <script>
-                // Função para diminuir e aumentar a quantidade
-                document.addEventListener('DOMContentLoaded', () => {
-                    const decreaseButton = document.getElementById('button-decrease');
-                    const increaseButton = document.getElementById('button-increase');
-                    const inputQuantity = document.getElementById('input-quantity');
-
-                    // Evento para diminuir a quantidade
-                    decreaseButton.addEventListener('click', () => {
-                        let currentValue = parseInt(inputQuantity.value, 10);
-                        if (currentValue > 1) {
-                            inputQuantity.value = currentValue - 1;
-                        }
-                    });
-
-                    // Evento para aumentar a quantidade
-                    increaseButton.addEventListener('click', () => {
-                        let currentValue = parseInt(inputQuantity.value, 10);
-                        inputQuantity.value = currentValue + 1;
-                    });
-                });
-            </script>
 
             <script>
                 //mensagem de "adicionado ao carrinho"
@@ -146,78 +197,7 @@
                     });
                 }
             </script>
-            <script>
 
-                // Função para atualizar a disponibilidade conforme a opção selecionada no dropdown
-                document.querySelectorAll('.dropdown-item').forEach(item => {
-                    item.addEventListener('click', function (event) {
-                        // Obtém o tipo de estoque e o preço da opção selecionada
-                        const stockType = event.target.getAttribute('data-stock');
-                        const stockPrice = parseFloat(event.target.getAttribute('data-price')).toFixed(2);
-
-                        // Atualiza o texto do botão dropdown
-                        const dropdownButton = document.getElementById('dropdownButton');
-                        dropdownButton.textContent = event.target.textContent; // Atualiza o texto do botão
-
-                        // Variáveis para armazenar o valor do estoque e o tipo da carta
-                        let stockValue = 0;
-                        let tipoCard = '';
-                        let price = 0;
-
-                        // Condicional para determinar os valores de estoque, tipo e preço
-                        switch (stockType) {
-                            case 'comum':
-                                stockValue = Number('<%= produto.est_comum %>');
-                                price = <%= parseFloat(produto.preco_comum).toFixed(2) %>;
-                                tipoCard = 'Comum';
-                                break;
-                            case 'reverse':
-                                stockValue = <%= produto.est_reverse %>;
-                                price = <%= parseFloat(produto.preco_reverse).toFixed(2) %>;
-                                tipoCard = 'Reverse Foil';
-                                break;
-                            case 'pokeball':
-                                stockValue = <%= produto.est_pokeball %>;
-                                price = <%= parseFloat(produto.preco_pokeball).toFixed(2) %>;
-                                tipoCard = 'Reverse Pokeball';
-                                break;
-                            case 'masterball':
-                                stockValue = <%= produto.est_masterball %>;
-                                price = <%= parseFloat(produto.preco_masterball).toFixed(2) %>;
-                                tipoCard = 'Reverse Masterball';
-                                break;
-                            default:
-                                stockValue = <%= produto.est_comum %>;
-                                price = <%= parseFloat(produto.preco_comum).toFixed(2) %>;
-                                tipoCard = 'Comum';
-                        }
-
-                        // Atualiza a classe e o texto de disponibilidade
-                        const disponibilidadeSpan = document.getElementById('disponibilidade');
-                        const tipoSpan = document.getElementById('tipoCarta');
-                        const precoSpan = document.getElementById('valorCarta');
-                        const comprarBtn = document.getElementById('comprarBtn');
-
-                        // Verifica a quantidade em estoque e atualiza a interface
-                        if (stockValue > 0) {
-                            disponibilidadeSpan.classList.remove('text-danger');
-                            disponibilidadeSpan.classList.add('text-success');
-                            disponibilidadeSpan.innerText = `Qnt. ${stockValue} un.`;
-                            precoSpan.innerText = `R$ ${(price).toFixed(2)}`;
-                            tipoSpan.innerText = tipoCard;
-                            comprarBtn.classList.remove('disabled');
-                        } else {
-                            disponibilidadeSpan.classList.remove('text-success');
-                            disponibilidadeSpan.classList.add('text-danger');
-                            disponibilidadeSpan.innerText = 'Fora de estoque';
-                            precoSpan.innerText = `R$ ${(price).toFixed(2)}`;
-                            comprarBtn.classList.add('disabled');
-                        }
-                    });
-                });
-
-
-            </script>
 
             <%- include('components/footer') %>
         </body>

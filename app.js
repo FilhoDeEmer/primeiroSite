@@ -33,7 +33,7 @@ app.get("/colecao/:nomeColecao", async (req, res) => {
   try {
     const colecoes = await fetchColecoes();
     const colecaoId = await fetchColecao(nomeColecao);
-    const allProducts = await fetchCarByColection(colecaoId);
+    const allProducts = await fetchCartByColection(colecaoId);
     
 
     res.render("colecao", { colecoes, allProducts}); // Passa as coleções diretamente para a view
@@ -106,8 +106,7 @@ const fetchColecao = async (nomeColecao) => {
   try {
     const results = await query.find();
     if (results.length > 0) {
-      
-      return results[0].get("Id"); 
+      return results[0].get("sigla"); 
     } else {
       throw new Error(`Nenhuma coleção encontrada com o nome: ${nomeColecao}`);
     }
@@ -117,12 +116,12 @@ const fetchColecao = async (nomeColecao) => {
   }
 };
 
-const fetchCarByColection = async (colecaoId) => {
+const fetchCartByColection = async (colecaoId) => {
   const produtos = Parse.Object.extend("produtos"); // aqui vai o nome da tabela
   const query = new Parse.Query(produtos);
-  query.equalTo("colecao", parseInt(colecaoId)); // aqui vai o parametro de busca
+  query.equalTo("colecao", colecaoId); // aqui vai o parametro de busca
   query.ascending("id_carta"); // Ordena por id
-  query.limit(250)
+  query.limit(280)
 
   try {
     const results = await query.find();
