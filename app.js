@@ -3,12 +3,10 @@ const path = require("path");
 const app = express();
 const port = process.env.PORT || 3000;
 const Parse = require("parse/node");
+const config = require("./config");
 
-Parse.initialize(
-  "D0lHfXTxQ7sUrXie3VctByS2IGFVOlEsr2hIrlRr",
-  "fOgD9Avu0fOO9ZHreqEjECWnR8kolrQAWz6ia9Yn"
-);
-Parse.serverURL = "https://parseapi.back4app.com";
+Parse.initialize(config.PARSE_APP_ID, config.PARSE_JS_KEY);
+Parse.serverURL = config.PARSE_SERVER_URL;
 
 app.set("view engine", "ejs");
 app.use("/public", express.static("public"));
@@ -20,7 +18,7 @@ allColections = [];
 app.get("/", async (req, res) => {
   try {
     const colecoes = await fetchColecoes();
-    const destaque = await fetchDestauqe();
+    const destaque = await fetchDestaque();
     const banner = await fetchBanner();
     res.render("index", { colecoes , destaque, banner }); // Passa as coleções diretamente para a view
   } catch (error) {
@@ -72,7 +70,7 @@ const fetchColecoes = async () => {
   }
 };
 // Função para buscar produtos em destaque
-const fetchDestauqe = async () => {
+const fetchDestaque = async () => {
   const produtos = Parse.Object.extend("produtos"); // aqui vai o nome da tabela
   const query = new Parse.Query(produtos);
   query.equalTo("destacar", true); 
