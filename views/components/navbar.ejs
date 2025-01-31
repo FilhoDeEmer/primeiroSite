@@ -1,13 +1,13 @@
 <nav class="navbar bg-body-tertiary navbar-gradient">
   <div class="container">
     <!-- Logo -->
-    <a class="navbar-brand d-flex align-items-center" href="/">
-      <img src="https://plpstore.com.br/img/logo.png" alt="Logo PLP Store" width="50" height="50" class="me-2">
+    <a class="navbar-brand d-flex align-items-center" href="/" aria-label="Página inicial">
+      <img src="https://plpstore.com.br/img/logo.png" alt="Logo PLP Store" width="50" height="50" class="me-2" id="logo-link">
       <span class="fw-bold">PLP Store</span>
     </a>
 
     <!-- Busca (oculto em mobile) -->
-    <form class="d-none d-md-flex me-3" action="/busca" method="GET">
+    <form class="d-none d-md-flex me-3" action="/carrinho-compras" method="GET">
       <input class="form-control me-2" type="search" placeholder="Buscar na PLP Store" aria-label="Buscar">
       <button class="btn btn-outline-dark" type="submit" aria-label="Pesquisar">
         <i class="bi bi-search"></i>
@@ -19,14 +19,14 @@
       <!-- Carrinho -->
       <button class="btn btn-carrinho-navbar btn-outline-dark position-relative me-3" type="button" id="buttonAdd">
         <i class="bi bi-cart-fill"></i>
-        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-          3 <!-- deve ser ajustado dinamicamente com a quantidade de itens no carrinho -->
+        <span class="position-absolute start-100 translate-middle badge rounded-pill bg-danger" id="quantidadeCarrinho" >
+          <%= carrinho.obterQuantidadeTotal()%>
         </span>
       </button>
 
       <!-- Login -->
-      <button class="btn btn-outline-dark" type="button" data-bs-toggle="offcanvas"
-        data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Abrir menu de login">
+      <button class="btn btn-outline-dark" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar"
+        aria-controls="offcanvasNavbar" aria-label="Abrir menu de login">
         <i class="bi bi-person-circle"></i>
         <span class="d-none d-md-inline">Login</span>
       </button>
@@ -60,14 +60,4 @@
   </div>
 </nav>
 
-<!-- 
-exemplo de carrinho
-<button class="btn btn-outline-dark position-relative me-3" type="button" id="buttonAdd">
-  <i class="bi bi-cart-fill" aria-hidden="true"></i>
-  <span class="visually-hidden">Carrinho</span>
-  <% if (0 > 0) { %>
-    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-      <%= 0 %>
-    </span>
-  <% } %>
-</button> -->
+

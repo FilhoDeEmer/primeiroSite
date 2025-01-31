@@ -1,0 +1,157 @@
+<%- include('components/head') %>
+
+  <body>
+    <%- include('components/navbar') %>
+      <div class="container-fluid">
+        <div class="row">
+          <%- include('components/sidemenu') %>
+
+            <main id="conteudo-principal" class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+              <div class="container-fluid mt-5">
+                <h2 class="text-center">Carrinho de Compras</h2>
+                <div id="carrinho-container" class="table-responsive mt-4">
+                  <!-- Carrinho de compras será preenchido via JavaScript -->
+                  <table class="table table-bordered table-sm table-hover">
+                    <thead>
+                      <tr class="table-secondary">
+                        <th>Produto</th>
+                        <th>Raridade</th>
+                        <th>Preço (R$)</th>
+                        <th>Quantidade</th>
+                        <th>Subtotal (R$)</th>
+                        <th>Ações</th>
+                      </tr>
+                    </thead>
+                    <tbody id="itensCarrinho">
+                      <!-- Itens do carrinho vão aqui -->
+                    </tbody>
+                  </table>
+                  <div class="d-flex justify-content-between mt-3">
+                    <h4>Total: <span id="totalCarrinho">R$ 0,00</span></h4>
+                    <button id="finalizarCompra" class="btn btn-success">Finalizar Compra</button>
+                  </div>
+                </div>
+              </div>
+            </main>
+        </div>
+      </div>
+
+      <%- include('components/footer') %>
+
+        <script>
+          // Função para calcular o subtotal de cada item e o total do carrinho
+          function calcularTotalCarrinho() {
+            let total = 0;
+            let produtos = document.querySelectorAll(".produto-carrinho");
+            produtos.forEach(produto => {
+              let preco = parseFloat(produto.dataset.preco);
+              let quantidade = parseInt(produto.querySelector(".quantidade").value);
+              let subtotal = preco * quantidade;
+              produto.querySelector(".subtotal").textContent = `R$ ${subtotal.toFixed(2)}`;
+              total += subtotal;
+            });
+            document.getElementById("totalCarrinho").textContent = `R$ ${total.toFixed(2)}`;
+          }
+
+          // Função para carregar os itens do carrinho na página
+          function carregarCarrinho() {
+            fetch('/carrinho')
+              .then(response => response.json())
+              .then(data => {
+                let carrinhoContainer = document.getElementById("itensCarrinho");
+                carrinhoContainer.innerHTML = ''; // Limpar carrinho atual
+                console.log(data);
+                // Adicionar cada produto ao carrinho
+                data.produtos.forEach(produto => {
+                  let row = document.createElement("tr");
+                  row.classList.add("produto-carrinho");
+                  row.dataset.preco = produto.preco;
+                  console.log(produto);
+                  row.innerHTML = `
+              <td>
+                <img src="${produto.img}" alt="${produto.nome}" style="width: 50px; height: 50px;">
+                <span>${produto.nome}</span>
+              </td>
+            <td>${produto.raridade}</td>
+              <td>R$ ${produto.preco.toFixed(2)}</td>
+              <td>
+                <input type="number" class="form-control quantidade" value="${produto.quantidade}" min="1"
+                  max="${parseInt(produto.estq_max)}" style="width: 80px;">
+              </td>
+              <td class="subtotal">R$ ${(produto.preco * produto.quantidade).toFixed(2)}</td>
+              <td>
+                <button class="btn btn-danger btn-sm btn-remover" data-id="${produto.id}">Remover</button>
+              </td>
+            `;
+
+                  // Adicionar evento para alteração de quantidade
+                  row.querySelector(".quantidade").addEventListener("change", () => {
+                    let quantidade = parseInt(row.querySelector(".quantidade").value);
+                    let id_carta = produto.id_carta;
+                    let raridade = produto.raridade;
+
+                    fetch('/atualizar-carrinho', {
+                      method: 'POST',
+                      headers: {
+                        'Content-Type': 'application/json'
+                      },
+                      body: JSON.stringify({ id_carta: id_carta, raridade: raridade, quantidade: quantidade })
+                    })
+                      .then(response => response.json())
+                      .then(() => {
+                        calcularTotalCarrinho();
+                      })
+                      .catch(error => console.error("Erro ao atualizar quantidade:", error));
+                  });
+
+                  // Adicionar evento para remover o item
+                  row.querySelector(".btn-remover").addEventListener("click", () => {
+                    let id_carta = produto.id_carta;
+                    let raridade = produto.raridade;
+
+                    fetch('/remover-do-carrinho', {
+                      method: 'POST',
+                      headers: {
+                        'Content-Type': 'application/json'
+                      },
+                      body: JSON.stringify({ id_carta: id_carta, raridade: raridade })
+                    })
+                      .then(response => response.json())
+                      .then(() => {
+                        carregarCarrinho(); // Recarregar o carrinho
+                      })
+                      .catch(error => console.error("Erro ao remover item:", error));
+                  });
+
+                  carrinhoContainer.appendChild(row);
+                });
+
+                // Calcular o total do carrinho
+                calcularTotalCarrinho();
+              })
+              .catch(error => console.error('Erro ao carregar carrinho:', error));
+          }
+
+          // Evento para finalizar a compra
+          document.getElementById("finalizarCompra").addEventListener("click", () => {
+            fetch('/finalizar-compra', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify({ clienteId: '123' }) // Substituir pelo cliente real
+            })
+              .then(response => response.json())
+              .then(data => {
+                alert("Compra finalizada com sucesso!");
+                window.location.href = "/confirmacao-compra"; // Redireciona para uma página de confirmação
+              })
+              .catch(error => console.error("Erro ao finalizar compra:", error));
+          });
+
+          // Carregar carrinho ao carregar a página
+          window.onload = carregarCarrinho;
+        </script>
+  </body>
+
+  </html>

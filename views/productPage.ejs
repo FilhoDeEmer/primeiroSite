@@ -1,11 +1,10 @@
 <%- include('components/head') %>
 
-    <%- include('components/navbar') %>
-
-        <body>
+    <body>
+        <%- include('components/navbar') %>
             <div class="container-fluid">
                 <div class="row">
-                    <%- include ('components/sidemenu') %>
+                    <%- include('components/sidemenu') %>
 
                         <main id="conteudo-principal" class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
                             <div class="container-fluid mt-5">
@@ -19,147 +18,77 @@
 
                                     <!-- Detalhes do Produto -->
                                     <div class="col-md-8">
-                                        <p class="fs-2 text-center text-uppercase fw-bold">
+                                        <p class="fs-2 text-center  fw-bold">
                                             <%= produto.nome %>
                                         </p>
 
                                         <div class="table-responsive col-md-12">
-                                            <table class="table table-borderled table-sm table-hover">
+                                            <table class="table table-bordered table-sm table-hover">
                                                 <thead>
-                                                    <tr>
+                                                    <tr class="table-secondary">
                                                         <th>Edição</th>
                                                         <th>Estado</th>
                                                         <th>Raridade</th>
                                                         <th>Estq.</th>
                                                         <th>Preço(R$)</th>
+                                                        <th></th>
+                                                        <th></th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <% if (produto.est_comum> 0) { %>
-                                                        <tr>
-                                                            <td>
-                                                                <%= produto.id_carta %>
-                                                            </td>
-                                                            <td>
-                                                                <a>NM</a>
-                                                            </td>
-                                                            <td>Comum</td>
-                                                            <td>
-                                                                <%= produto.est_comum %>
-                                                            </td>
-                                                            <td>
-                                                                <%= parseFloat(produto.preco_comum).toFixed(2) %>
-                                                            </td>
-                                                            <td>
-                                                                <!-- Campo de entrada -->
-                                                                <input type="number" class="form-control text-center"
-                                                                    id="input-quantity-comum" value="1" min="1"
-                                                                    style="width: 75px; height: 30px; border-radius: 0%;">
-                                                            </td>
-                                                            <td>
-                                                                <button class="btn btn-sm btn-primary">Comprar</button>
-                                                            </td>
-                                                        </tr>
-                                                        <% } %>
-                                                            <% if (produto.est_reverse> 0) { %>
-                                                                <tr>
-                                                                    <td>
-                                                                        <%= produto.id_carta %>
-                                                                    </td>
-                                                                    <td>NM</td>
-                                                                    <td>Reverse</td>
-                                                                    <td>
-                                                                        <%= produto.est_reverse %>
-                                                                    </td>
-                                                                    <td>
-                                                                        <%=
-                                                                            parseFloat(produto.preco_reverse).toFixed(2)%>
-                                                                    </td>
-                                                                    <td>
-                                                                        <!-- Campo de entrada -->
-                                                                        <input type="number"
-                                                                            class="form-control text-center"
-                                                                            id="input-quantity-reverse" value="1"
-                                                                            min="1"
-                                                                            style="width: 75px; height: 30px; border-radius: 0%;">
-                                                                    </td>
-                                                                    <td>
+                                                    <% let edicoes=[ { nome: "Comum" , estoque: produto.est_comum,
+                                                        preco: produto.preco_comum }, { nome: "Reverse" , estoque:
+                                                        produto.est_reverse, preco: produto.preco_reverse }, {
+                                                        nome: "Pokeball" , estoque: produto.est_pokeball, preco:
+                                                        produto.preco_pokeball }, { nome: "Masterball" , estoque:
+                                                        produto.est_masterball, preco: produto.preco_masterball } ]; %>
+
+                                                        <% edicoes.forEach(edicao=> { if (edicao.estoque > 0) { %>
+                                                            <tr>
+                                                                <td>
+                                                                    <%= produto.id_carta %>
+                                                                </td>
+                                                                <td>NM</td>
+                                                                <td>
+                                                                    <%= edicao.nome %>
+                                                                </td>
+                                                                <td>
+                                                                    <%= edicao.estoque %>
+                                                                </td>
+                                                                <td>
+                                                                    <%= parseFloat(edicao.preco).toFixed(2) %>
+                                                                </td>
+                                                                <td>
+                                                                    <input type="number"
+                                                                        class="form-control text-center qntToCart"
+                                                                        value="1" min="1" max="<%= edicao.estoque %>"
+                                                                        style="width: 75px; height: 30px; border-radius: 0%;">
+                                                                </td>
+                                                                <td>
+                                                                    <div class="d-grid gap-2">
                                                                         <button
-                                                                            class="btn btn-sm btn-primary">Comprar</button>
-                                                                    </td>
-                                                                </tr>
-                                                                <% } %>
-                                                                    <% if (produto.est_pokeball> 0) { %>
-                                                                        <tr>
-                                                                            <td>
-                                                                                <%= produto.id_carta %>
-                                                                            </td>
-                                                                            <td>NM</td>
-                                                                            <td>Pokeball</td>
-                                                                            <td>
-                                                                                <%= produto.est_pokeball %>
-                                                                            </td>
-                                                                            <td>
-                                                                                <%= parseFloat(produto.preco_pokeball).toFixed(2)
-                                                                                    %>
-                                                                            </td>
-                                                                            <td>
-                                                                                <!-- Campo de entrada -->
-                                                                                <input type="number"
-                                                                                    class="form-control text-center"
-                                                                                    id="input-quantity-pokeball"
-                                                                                    value="1" min="1"
-                                                                                    style="width: 75px; height: 30px; border-radius: 0%;">
-                                                                            </td>
-                                                                            <td>
-                                                                                <button
-                                                                                    class="btn btn-sm btn-primary">Comprar</button>
-                                                                            </td>
-                                                                        </tr>
-                                                                        <% } %>
-                                                                            <% if (produto.est_masterball> 0) { %>
-                                                                                <tr>
-                                                                                    <td>
-                                                                                        <%= produto.id_carta %>
-                                                                                    </td>
-                                                                                    <td>NM</td>
-                                                                                    <td>Masterball</td>
-                                                                                    <td>
-                                                                                        <%= produto.est_masterball %>
-                                                                                    </td>
-                                                                                    <td>
-                                                                                        <%= parseFloat(produto.preco_masterball).toFixed(2)
-                                                                                            %>
-                                                                                    </td>
-
-                                                                                    <td>
-                                                                                        <!-- Campo de entrada -->
-                                                                                        <input type="number"
-                                                                                            class="form-control text-center"
-                                                                                            id="input-quantity-masterball"
-                                                                                            value="1" min="1"
-                                                                                            style="width: 75px; height: 30px; border-radius: 0%;">
-                                                                                    </td>
-
-                                                                                    <td>
-                                                                                        <button
-                                                                                            class="btn btn-sm btn-primary">Comprar</button>
-                                                                                    </td>
-                                                                                </tr>
-                                                                                <% } %>
+                                                                            class="btn btn-sm btn-success btn-add-carrinho"
+                                                                            data-id="<%= produto.id_carta %>"
+                                                                            data-img="<%= produto.img_tcg %>"
+                                                                            data-raridade="<%= edicao.nome %>"
+                                                                            data-nome="<%= produto.nome %>"
+                                                                            data-estq="<%= edicao.estoque %>"
+                                                                            data-preco="<%= edicao.preco %>">Comprar <i
+                                                                                class="bi bi-cart-plus-fill"></i></button>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                            <% } }); %>
                                                 </tbody>
                                             </table>
-                                            <p class="text-muted">*NM = Near Mint(Praticamente nova)</p>
+                                            <p class="text-muted">*NM = Near Mint (Praticamente nova)</p>
                                         </div>
 
-
-
                                         <!-- Container da Toast -->
-                                        <div class="toast-container position-fixed bottom-0 end-0 p-3">
-                                            <div id="liveToast" class="toast" role="alert" aria-live="assertive"
-                                                aria-atomic="true">
+                                        <div id="toastNotice" class="toast-container position-fixed bottom-0 end-0 p-3">
+                                            <div class="toast" role="alert" aria-live="assertive" aria-atomic="true"
+                                                data-bs-autohide="false">
                                                 <div class="toast-header">
-                                                    <!-- Imagem de exibição no Toast -->
                                                     <img src="<%= produto.img_tcg ? produto.img_tcg : 'https://tcg.pokemon.com/assets/img/global/tcg-card-back.jpg' %>"
                                                         class="rounded me-2" alt="Imagem do produto"
                                                         style="width: 40px; height: 40px;">
@@ -177,27 +106,60 @@
                                         </div>
                                     </div>
                                 </div>
-
                             </div>
                         </main>
-
                 </div>
             </div>
 
-            <script>
-                //mensagem de "adicionado ao carrinho"
-                const toastTrigger = document.getElementById('buttonAdd'); // Botão de exibição
-                const toastLiveExample = document.getElementById('liveToast'); // Elemento da Toast
-
-                if (toastTrigger) {
-                    const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastLiveExample);
-                    toastTrigger.addEventListener('click', () => {
-                        console.log('teste: botão clicado!');
-                        toastBootstrap.show(); // Exibe a Toast
-                    });
-                }
-            </script>
-
-
             <%- include('components/footer') %>
-        </body>
+
+                <script>
+                    // Função para atualizar a quantidade no carrinho
+                    function atualizarQuantidadeCarrinho() {
+                        fetch('/carrinho')
+                            .then(response => response.json())
+                            .catch(error => console.error('Erro ao atualizar o carrinho:', error));
+                    }
+
+                    // Adicionar ao carrinho com Fetch
+                    document.querySelectorAll(".btn-add-carrinho").forEach(button => {
+                        button.addEventListener("click", function () {
+                            let inputQuantidade = this.closest("tr").querySelector(".qntToCart");
+                            let quantidade = parseInt(inputQuantidade.value);
+
+                            let produto = {
+                                id_carta: this.dataset.id,
+                                nome: this.dataset.nome,
+                                raridade: this.dataset.raridade,
+                                preco: parseFloat(this.dataset.preco),
+                                quantidade: quantidade,
+                                estq_max: this.dataset.estq,
+                                img: this.dataset.img
+                            };
+
+                            fetch("/adicionar-ao-carrinho", {
+                                method: "POST",
+                                headers: {
+                                    "Content-Type": "application/json"
+                                },
+                                body: JSON.stringify(produto)
+                            })
+                                .then(response => response.json())
+                                .then(data => {
+                                    // Exibir o toast
+                                    let toast = new bootstrap.Toast(document.getElementById('toastNotice'));
+                                    toast.show();
+
+                                    // Atualizar o carrinho
+                                    atualizarQuantidadeCarrinho();
+                                })
+                                .catch(error => console.error("Erro ao adicionar produto:", error));
+                        });
+                    });
+
+                    // Inicializa a quantidade do carrinho na página
+                    window.onload = atualizarQuantidadeCarrinho;
+                </script>
+    </body>
+
+    </html>
