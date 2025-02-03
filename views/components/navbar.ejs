@@ -14,15 +14,14 @@
       </button>
     </form>
 
-    <!-- Ícones Direitos -->
     <div class="d-flex align-items-center">
       <!-- Carrinho -->
-      <button class="btn btn-carrinho-navbar btn-outline-dark position-relative me-3" type="button" id="buttonAdd">
+      <a class="btn btn-carrinho-navbar btn-outline-dark position-relative me-3" href="/carrinho-compras">
         <i class="bi bi-cart-fill"></i>
-        <span class="position-absolute start-100 translate-middle badge rounded-pill bg-danger" id="quantidadeCarrinho" >
-          <%= carrinho.obterQuantidadeTotal()%>
+        <span class="position-absolute start-100 translate-middle badge rounded-pill bg-danger" id="quantidadeCarrinho">
+          <%= carrinho.obterQuantidadeTotal() %>
         </span>
-      </button>
+      </a>
 
       <!-- Login -->
       <button class="btn btn-outline-dark" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar"
@@ -40,7 +39,7 @@
       </div>
       <div class="offcanvas-body">
         <form action="/login" method="POST">
-          <input type="hidden" name="_csrf" value="csrfToken">
+          <input type="hidden" name="_csrf" value="futuroToken">
           <div class="mb-3">
             <label for="email" class="form-label">Email</label>
             <input type="email" class="form-control" id="email" name="email" placeholder="seuemail@exemplo.com" required>
@@ -60,4 +59,38 @@
   </div>
 </nav>
 
+<script>
+  // Função para atualizar a quantidade do carrinho
+  function atualizarQuantidadeCarrinho() {
+    fetch('/carrinho')
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Erro ao buscar o carrinho');
+        }
+        return response.json();
+      })
+      .then(data => {
+        const carrinhoQtd = document.getElementById('quantidadeCarrinho');
 
+        if (!carrinhoQtd) {
+          console.error('Elemento carrinhoQtd não encontrado.');
+          return;
+        }
+
+        // Atualizando o conteúdo e visibilidade do badge
+        if (data && data.obterQuantidadeTotal() > 0) {
+          carrinhoQtd.textContent = data.totalItens;
+          carrinhoQtd.style.display = "inline-block";
+        } else {
+          carrinhoQtd.textContent = "";
+          carrinhoQtd.style.display = "none";
+        }
+      })
+      .catch(error => {
+        console.error('Erro ao atualizar o carrinho:', error);
+      });
+  }
+
+  // Atualizar o carrinho assim que a página for carregada
+  document.addEventListener('DOMContentLoaded', atualizarQuantidadeCarrinho);
+</script>

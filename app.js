@@ -22,16 +22,17 @@ app.use(session({
   cookie: { maxAge: 1000 * 60 * 60 }
 }));
 
-//carrinho
+// Carrinho Middleware
 app.use((req, res, next) => {
   if (!req.session.carrinho) {
-    req.session.carrinho = { clienteId: null, produtos: [] };
+    req.session.carrinho = { clienteId: null, produtos: [], totalItens: 0 };
   }
   req.carrinho = new Carrinho(req.session.carrinho.clienteId);
   req.carrinho.produtos = req.session.carrinho.produtos;
   res.locals.carrinho = req.carrinho;
   next();
 });
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -57,62 +58,48 @@ app.get("/colecao/:nomeColecao", async (req, res) => {
     res.render("colecao", { colecoes, allProducts });
   } catch (error) {
     res.status(500).send("Erro ao buscar coleções");
-    console.error("Erro ao renderizar a página principal", error);
+    console.error("Erro ao renderizar a página de coleção", error);
   }
 });
 
 app.get("/produtos/:produtoId", async (req, res) => {
   const idProduto = req.params.produtoId;
-  const colecoes = await fetchColecoes();
   try {
+    const colecoes = await fetchColecoes();
     const produto = await fetchProduto(idProduto);
     res.render("productPage", { colecoes, produto: produto[0] });
   } catch (error) {
-    res.status(500).send("Erro ao buscar coleções");
-    console.error("Erro ao renderizar a página principal", error);
+    res.status(500).send("Erro ao buscar o produto");
+    console.error("Erro ao renderizar a página do produto", error);
   }
 });
 
 app.get('/carrinho', (req, res) => {
-  res.json(req.session.carrinho || { produtos: [] });
+  res.json(req.carrinho);
 });
-
 
 app.get('/carrinho-compras', async (req, res) => {
   const colecoes = await fetchColecoes();
   res.render("carrinhoPage", { colecoes });
 });
 
-
 app.post('/adicionar-ao-carrinho', (req, res) => {
   const { clienteId, id_carta, nome, raridade, preco, quantidade, estq_max, img } = req.body;
-  req.carrinho.adicionarProduto(id_carta, nome, raridade, parseFloat(preco), parseInt(quantidade),img, estq_max);
-  req.session.carrinho = { clienteId: req.carrinho.clienteId, produtos: req.carrinho.produtos };
+  req.carrinho.adicionarProduto(id_carta, nome, raridade, parseFloat(preco), parseInt(quantidade), img, estq_max);
+  req.session.carrinho = { clienteId, produtos: req.carrinho.produtos};
   res.json({ mensagem: "Produto adicionado ao carrinho!", carrinho: req.session.carrinho });
 });
 
 app.post('/remover-do-carrinho', (req, res) => {
   const { id_carta, raridade } = req.body;
-  if (req.session.carrinho) {
-    req.carrinho.removerProduto(id_carta, raridade);
-  }
-  res.json({ quantidadeItens: req.session.carrinho ? req.session.carrinho.produtos.length : 0 });
+  req.carrinho.removerProduto(id_carta, raridade);
+  res.json({ quantidadeItens: req.session.carrinho.produtos.length });
 });
-
 
 app.post('/atualizar-carrinho', (req, res) => {
   const { id_carta, quantidade, raridade } = req.body;
-  if (req.session.carrinho) {
-    req.carrinho.atualizarQuantidade(id_carta, quantidade, raridade);
-  }
-  res.json({ quantidadeItens: req.session.carrinho ? req.session.carrinho.produtos.length : 0 });
-});
-app.post('/remover-do-carrinho', (req, res) => {
-  const { id_carta, raridade } = req.body;
-  if (req.session.carrinho) {
-    req.carrinho.removerProduto(id_carta, raridade);
-  }
-  res.json({ quantidadeItens: req.session.carrinho ? req.session.carrinho.produtos.length : 0 });
+  req.carrinho.atualizarQuantidade(id_carta, quantidade, raridade);
+  res.json({ quantidadeItens: req.session.carrinho.produtos.length });
 });
 
 // Fetch functions
@@ -147,9 +134,9 @@ const fetchProduto = async (produtoId) => {
   query.equalTo("id_carta", produtoId);
   try {
     const results = await query.find();
-    return results.map((colecao) => colecao.toJSON());
+    return results.map((produto) => produto.toJSON());
   } catch (error) {
-    console.error("Erro ao buscar produtos em destaque:", error);
+    console.error("Erro ao buscar produto:", error);
     throw error;
   }
 };

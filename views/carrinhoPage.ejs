@@ -150,7 +150,9 @@
           });
 
           // Carregar carrinho ao carregar a página
-          window.onload = carregarCarrinho;
+          document.addEventListener('DOMContentLoaded', function () {
+            carregarCarrinho(); // Carregar o carrinho assim que a página for carregada
+          });
         </script>
   </body>
 

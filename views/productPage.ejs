@@ -114,18 +114,16 @@
             <%- include('components/footer') %>
 
                 <script>
-                    // Função para atualizar a quantidade no carrinho
-                    function atualizarQuantidadeCarrinho() {
-                        fetch('/carrinho')
-                            .then(response => response.json())
-                            .catch(error => console.error('Erro ao atualizar o carrinho:', error));
-                    }
-
-                    // Adicionar ao carrinho com Fetch
                     document.querySelectorAll(".btn-add-carrinho").forEach(button => {
                         button.addEventListener("click", function () {
                             let inputQuantidade = this.closest("tr").querySelector(".qntToCart");
                             let quantidade = parseInt(inputQuantidade.value);
+                            let estoqueMaximo = parseInt(this.dataset.estq);
+
+                            if (quantidade > estoqueMaximo) {
+                                alert("A quantidade escolhida excede o estoque disponível.");
+                                return;
+                            }
 
                             let produto = {
                                 id_carta: this.dataset.id,
@@ -146,20 +144,16 @@
                             })
                                 .then(response => response.json())
                                 .then(data => {
-                                    // Exibir o toast
-                                    let toast = new bootstrap.Toast(document.getElementById('toastNotice'));
-                                    toast.show();
 
-                                    // Atualizar o carrinho
                                     atualizarQuantidadeCarrinho();
+
                                 })
                                 .catch(error => console.error("Erro ao adicionar produto:", error));
                         });
                     });
 
-                    // Inicializa a quantidade do carrinho na página
-                    window.onload = atualizarQuantidadeCarrinho;
                 </script>
     </body>
 
     </html>
+    
