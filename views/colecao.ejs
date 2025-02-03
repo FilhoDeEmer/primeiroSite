@@ -40,8 +40,9 @@
                                             <h5 class="card-title text-break"
                                                 style="font-size: 16px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
                                                 <%= product.nome %>
+                                                (<%= product.colecao %>)
                                             </h5>
-                                            <h6 class="card-text">Preço: <strong>R$ <%=
+                                            <h6 class="card-text"><strong>R$ <%=
                                                         parseFloat(product.preco_comum).toFixed(2)  %></strong></h6>
                                             <b class="card-text">Un.: <strong>
                                                     <%= (product.est_comum + product.est_reverse + product.est_pokeball + product.est_masterball) %>

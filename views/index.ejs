@@ -74,30 +74,6 @@
 
   <%- include('components/footer') %>
 
-    <!-- Botão de voltar ao topo -->
-    <button id="back-to-top" class="btn-top">
-      <i class="fas fa-arrow-up"></i>
-    </button>
-
-
-
-
-    <script>
-      // Mostrar/esconder botão de voltar ao topo
-      const backToTopButton = document.getElementById('back-to-top');
-      window.addEventListener('scroll', () => {
-        if (window.scrollY > 300) {
-          backToTopButton.style.display = 'flex';
-        } else {
-          backToTopButton.style.display = 'none';
-        }
-      });
-
-      // Ação de voltar ao topo
-      backToTopButton.addEventListener('click', () => {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      });
-    </script>
     <script>
       document.getElementById('logo-link').addEventListener('click', function (e) {
         e.preventDefault(); // Impede o comportamento padrão do link.

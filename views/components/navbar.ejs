@@ -7,11 +7,16 @@
     </a>
 
     <!-- Busca (oculto em mobile) -->
-    <form class="d-none d-md-flex me-3" action="/carrinho-compras" method="GET">
-      <input class="form-control me-2" type="search" placeholder="Buscar na PLP Store" aria-label="Buscar">
-      <button class="btn btn-outline-dark" type="submit" aria-label="Pesquisar">
-        <i class="bi bi-search"></i>
-      </button>
+    <form class="d-none d-md-flex m-auto" action="/buscar" method="GET">
+      <div class="col-auto">
+        <input class="form-control m-auto" type="search" placeholder="Buscar na PLP Store" aria-label="Buscar"
+          id="campoBusca" name="busca">
+      </div>
+      <div class="col-auto m-auto">
+        <button class="btn btn-outline-dark" type="submit" aria-label="Pesquisar">
+          <i class="bi bi-search"></i>
+        </button>
+      </div>
     </form>
 
     <div class="d-flex align-items-center">

@@ -15,12 +15,14 @@ Parse.serverURL = config.PARSE_SERVER_URL;
 // Middleware setup
 app.set("view engine", "ejs");
 app.use("/public", express.static("public"));
-app.use(session({
-  secret: process.env.SESSION_SECRET || 'chave-super-hyper-mega-secreta',
-  resave: false,
-  saveUninitialized: true,
-  cookie: { maxAge: 1000 * 60 * 60 }
-}));
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET || "chave-super-hyper-mega-secreta",
+    resave: false,
+    saveUninitialized: true,
+    cookie: { maxAge: 1000 * 60 * 60 },
+  })
+);
 
 // Carrinho Middleware
 app.use((req, res, next) => {
@@ -62,6 +64,18 @@ app.get("/colecao/:nomeColecao", async (req, res) => {
   }
 });
 
+app.get("/buscar", async (req, res) => {
+  const termoBusca = req.query.busca;
+  const allProducts = await fetchTermo(termoBusca);
+  try {
+    const colecoes = await fetchColecoes();
+    res.render("colecao", { colecoes, allProducts: allProducts });
+  } catch (error) {
+    res.status(500).send("Erro ao buscar o produto");
+    console.error("Erro ao renderizar a página do produto", error);
+  }
+});
+
 app.get("/produtos/:produtoId", async (req, res) => {
   const idProduto = req.params.produtoId;
   try {
@@ -74,47 +88,55 @@ app.get("/produtos/:produtoId", async (req, res) => {
   }
 });
 
-app.get('/carrinho', (req, res) => {
+app.get("/carrinho", (req, res) => {
   res.json(req.carrinho);
 });
 
-app.get('/carrinho-compras', async (req, res) => {
+app.get("/carrinho-compras", async (req, res) => {
   const colecoes = await fetchColecoes();
   res.render("carrinhoPage", { colecoes });
 });
 
-app.post('/adicionar-ao-carrinho', (req, res) => {
-  const { clienteId, id_carta, nome, raridade, preco, quantidade, estq_max, img } = req.body;
-  req.carrinho.adicionarProduto(id_carta, nome, raridade, parseFloat(preco), parseInt(quantidade), img, estq_max);
-  req.session.carrinho = { clienteId, produtos: req.carrinho.produtos};
-  res.json({ mensagem: "Produto adicionado ao carrinho!", carrinho: req.session.carrinho });
+app.post("/adicionar-ao-carrinho", (req, res) => {
+  const {
+    clienteId,
+    id_carta,
+    nome,
+    raridade,
+    preco,
+    quantidade,
+    estq_max,
+    img,
+  } = req.body;
+  req.carrinho.adicionarProduto(
+    id_carta,
+    nome,
+    raridade,
+    parseFloat(preco),
+    parseInt(quantidade),
+    img,
+    estq_max
+  );
+  req.session.carrinho = { clienteId, produtos: req.carrinho.produtos };
+  res.json({
+    mensagem: "Produto adicionado ao carrinho!",
+    carrinho: req.session.carrinho,
+  });
 });
 
-app.post('/remover-do-carrinho', (req, res) => {
+app.post("/remover-do-carrinho", (req, res) => {
   const { id_carta, raridade } = req.body;
   req.carrinho.removerProduto(id_carta, raridade);
   res.json({ quantidadeItens: req.session.carrinho.produtos.length });
 });
 
-app.post('/atualizar-carrinho', (req, res) => {
+app.post("/atualizar-carrinho", (req, res) => {
   const { id_carta, quantidade, raridade } = req.body;
   req.carrinho.atualizarQuantidade(id_carta, quantidade, raridade);
   res.json({ quantidadeItens: req.session.carrinho.produtos.length });
 });
 
 // Fetch functions
-const fetchColecoes = async () => {
-  const colecoes = Parse.Object.extend("colecao");
-  const query = new Parse.Query(colecoes);
-  try {
-    const results = await query.find();
-    return results.map((colecao) => colecao.toJSON());
-  } catch (error) {
-    console.error("Erro ao buscar coleções:", error);
-    throw error;
-  }
-};
-
 const fetchDestaque = async () => {
   const produtos = Parse.Object.extend("produtos");
   const query = new Parse.Query(produtos);
@@ -140,6 +162,24 @@ const fetchProduto = async (produtoId) => {
     throw error;
   }
 };
+const fetchTermo = async (termo) => {
+  const produtos = Parse.Object.extend("produtos");
+  const query = new Parse.Query(produtos);
+  query.matches("nome", `.*${termo}.*`, 'i'); //busca case sensitice de termo parecido
+  query.ascending("nome");
+  query.limit(280);
+  try {
+    const results = await query.find();    
+    if (results.length > 0) {
+      return results.map((produto) => produto.toJSON());
+    } else {
+      throw new Error(`Nenhuma coleção encontrada com o nome: ${termo}`);
+    }
+  } catch (error) {
+    console.error("Erro ao buscar coleções: ", termo, error);
+    throw error;
+  }
+};
 
 const fetchColecao = async (nomeColecao) => {
   const colecoes = Parse.Object.extend("colecao");
@@ -154,6 +194,18 @@ const fetchColecao = async (nomeColecao) => {
     }
   } catch (error) {
     console.error("Erro ao buscar coleções: ", nomeColecao, error);
+    throw error;
+  }
+};
+
+const fetchColecoes = async () => {
+  const colecoes = Parse.Object.extend("colecao");
+  const query = new Parse.Query(colecoes);
+  try {
+    const results = await query.find();
+    return results.map((colecao) => colecao.toJSON());
+  } catch (error) {
+    console.error("Erro ao buscar coleções:", error);
     throw error;
   }
 };

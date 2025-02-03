@@ -1,4 +1,27 @@
 <footer class="footer-gradient">
+
+  <!-- Botão de voltar ao topo -->
+  <button id="back-to-top" class="btn-top">
+    <i class="bi bi-arrow-up"></i>
+  </button>
+  <script>
+    // Mostrar/esconder botão de voltar ao topo
+    const backToTopButton = document.getElementById('back-to-top');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 300) {
+        backToTopButton.style.display = 'flex';
+      } else {
+        backToTopButton.style.display = 'none';
+      }
+    });
+
+    // Ação de voltar ao topo
+    backToTopButton.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  </script>
+
+  
   <div class="container">
     <div class="row py-5">
       <!-- Contato -->
