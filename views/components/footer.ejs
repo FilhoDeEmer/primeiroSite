@@ -67,9 +67,80 @@
 </footer>
 
 <!-- Scripts -->
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 <script>
   // Atualiza o ano dinamicamente
   document.getElementById('current-year').textContent = new Date().getFullYear();
+</script>
+
+
+<!-- Script para o navbar login -->
+<script>
+  let isCadastro = false; // Flag para saber se estamos no modo cadastro
+
+  // Evento para alternar entre "Cadastrar" e "Já tenho conta"
+  document.getElementById('registerLink').addEventListener('click', function (event) {
+      event.preventDefault(); // Evita que o link faça algo por padrão
+
+      const form = document.getElementById('loginForm');
+      const registerLink = document.getElementById('registerLink');
+      const btnSubmit = document.getElementById('btnSubmit');
+      const labelLogin = document.getElementById('myModalLabel');
+
+      if (!isCadastro) {
+          // Mostrar os campos de cadastro
+          const telefoneDiv = document.createElement('div');
+          telefoneDiv.classList.add('form-floating', 'mb-3');
+          telefoneDiv.innerHTML = `
+              <input type="password" class="form-control rounded-3" id="floatingRepetirSenha" placeholder="Repetir Senha" required>
+              <label for="floatingRepetirSenha">Repetir Senha</label>
+          `;
+          form.insertBefore(telefoneDiv, form.querySelector('hr'));
+
+          const nomeDiv = document.createElement('div');
+          nomeDiv.classList.add('form-floating', 'mb-3');
+          nomeDiv.innerHTML = `
+              <input type="text" class="form-control rounded-3" id="floatingNome" placeholder="Seu nome completo" required>
+              <label for="floatingNome">Nome Completo</label>
+          `;
+          form.insertBefore(nomeDiv, form.querySelector('hr'));
+
+          // Alterar o link para "Já tenho conta"
+          registerLink.textContent = 'Já tenho conta';
+          btnSubmit.textContent = 'Cadastrar';
+          labelLogin.textContent = 'Cadastrar';
+      } else {
+          // Remover os campos de cadastro
+          form.removeChild(form.querySelector('#floatingNome').parentNode);
+          form.removeChild(form.querySelector('#floatingRepetirSenha').parentNode);
+
+          // Alterar o link de volta para "Cadastrar"
+          registerLink.textContent = 'Cadastrar';
+          btnSubmit.textContent = 'Entrar';
+          labelLogin.textContent = 'Login';
+      }
+
+      // Alternar o estado de cadastro
+      isCadastro = !isCadastro;
+  });
+
+  // Função para simular o envio do formulário
+  function handleSubmit(event) {
+      event.preventDefault(); // Evita o envio real do formulário
+
+      // Exibe mensagem de sucesso ou erro
+      const messageElement = document.getElementById('message');
+      messageElement.classList.remove('text-danger', 'text-success');
+
+      // Verifica se estamos no modo de login ou cadastro
+      if (isCadastro) {
+          // Simulando cadastro
+          messageElement.textContent = 'Cadastro realizado com sucesso!';
+          messageElement.classList.add('text-success');
+      } else {
+          // Simulando login
+          messageElement.textContent = 'Login realizado com sucesso!';
+          messageElement.classList.add('text-success');
+      }
+  }
 </script>

@@ -39,6 +39,10 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // Routes
+app.get("/teste", async (req,res) => {
+  res.render("teste2");
+});
+
 app.get("/", async (req, res) => {
   try {
     const colecoes = await fetchColecoes();

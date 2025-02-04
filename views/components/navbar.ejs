@@ -2,18 +2,19 @@
   <div class="container">
     <!-- Logo -->
     <a class="navbar-brand d-flex align-items-center" href="/" aria-label="Página inicial">
-      <img src="https://plpstore.com.br/img/logo.png" alt="Logo PLP Store" width="50" height="50" class="me-2" id="logo-link">
+      <img src="https://plpstore.com.br/img/logo.png" alt="Logo PLP Store" width="50" height="50" class="me-2"
+        id="logo-link">
       <span class="fw-bold">PLP Store</span>
     </a>
 
     <!-- Busca (oculto em mobile) -->
-    <form class="d-none d-md-flex m-auto" action="/buscar" method="GET">
+    <form class="d-none d-md-flex" action="/buscar" method="GET">
       <div class="col-auto">
         <input class="form-control m-auto" type="search" placeholder="Buscar na PLP Store" aria-label="Buscar"
           id="campoBusca" name="busca">
       </div>
-      <div class="col-auto m-auto">
-        <button class="btn btn-outline-dark" type="submit" aria-label="Pesquisar">
+      <div class="col-auto">
+        <button class="btn btn-outline-dark " type="submit" aria-label="Pesquisar">
           <i class="bi bi-search"></i>
         </button>
       </div>
@@ -29,36 +30,46 @@
       </a>
 
       <!-- Login -->
-      <button class="btn btn-outline-dark" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar"
-        aria-controls="offcanvasNavbar" aria-label="Abrir menu de login">
+      <button class="btn btn-outline-dark" id="openModal" type="button" data-bs-target="#myModal" data-bs-toggle="modal"
+        aria-label="Abrir menu de login">
         <i class="bi bi-person-circle"></i>
         <span class="d-none d-md-inline">Login</span>
       </button>
-    </div>
 
-    <!-- Offcanvas Login -->
-    <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
-      <div class="offcanvas-header">
-        <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Acesse sua conta</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Fechar"></button>
-      </div>
-      <div class="offcanvas-body">
-        <form action="/login" method="POST">
-          <input type="hidden" name="_csrf" value="futuroToken">
-          <div class="mb-3">
-            <label for="email" class="form-label">Email</label>
-            <input type="email" class="form-control" id="email" name="email" placeholder="seuemail@exemplo.com" required>
+      <!-- Modal -->
+      <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="myModalLabel">Login</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <form id="loginForm" onsubmit="return handleSubmit(event)">
+                <div class="form-floating mb-3">
+                  <input type="email" class="form-control rounded-3" id="floatingInput" placeholder="name@example.com"
+                    required>
+                  <label for="floatingInput">E-mail</label>
+                </div>
+                <div class="form-floating mb-3">
+                  <input type="password" class="form-control rounded-3" id="floatingPassword" placeholder="Password"
+                    required>
+                  <label for="floatingPassword">Senha</label>
+                </div>
+
+                <hr class="my-4">
+                <p class="text-center mb-0">
+                  <a href="#" id="registerLink" class="text-decoration-none">Cadastrar</a>
+                </p>
+                <div id="message" class="text-center mt-3"></div>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-custom-primary" id="btnSubmit" type="submit">Entrar</button>
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+            </div>
           </div>
-          <div class="mb-3">
-            <label for="password" class="form-label">Senha</label>
-            <input type="password" class="form-control" id="password" name="password" required>
-          </div>
-          <button type="submit" class="btn btn-primary w-100">Entrar</button>
-        </form>
-        <hr>
-        <p class="text-center mb-0">
-          <a href="/recuperar-senha" class="text-decoration-none">Esqueceu a senha?</a>
-        </p>
+        </div>
       </div>
     </div>
   </div>

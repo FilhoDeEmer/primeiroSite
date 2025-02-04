@@ -66,7 +66,7 @@
                                                                 </td>
                                                                 <td>
                                                                     <div class="d-grid gap-2">
-                                                                        <button
+                                                                        <button id="toastBtn_<%= produto.id_carta %>"
                                                                             class="btn btn-sm btn-success btn-add-carrinho"
                                                                             data-id="<%= produto.id_carta %>"
                                                                             data-img="<%= produto.img_tcg %>"
@@ -85,9 +85,9 @@
                                         </div>
 
                                         <!-- Container da Toast -->
-                                        <div id="toastNotice" class="toast-container position-fixed bottom-0 end-0 p-3">
-                                            <div class="toast" role="alert" aria-live="assertive" aria-atomic="true"
-                                                data-bs-autohide="false">
+                                        <div class="toast-container position-fixed bottom-0 end-0 p-3">
+                                            <div id="liveToast" class="toast" role="alert" aria-live="assertive"
+                                                aria-atomic="true">
                                                 <div class="toast-header">
                                                     <img src="<%= produto.img_tcg ? produto.img_tcg : 'https://tcg.pokemon.com/assets/img/global/tcg-card-back.jpg' %>"
                                                         class="rounded me-2" alt="Imagem do produto"
@@ -110,9 +110,7 @@
                         </main>
                 </div>
             </div>
-
             <%- include('components/footer') %>
-
                 <script>
                     document.querySelectorAll(".btn-add-carrinho").forEach(button => {
                         button.addEventListener("click", function () {
@@ -149,11 +147,21 @@
 
                                 })
                                 .catch(error => console.error("Erro ao adicionar produto:", error));
+
+                            //Toast
+                            // Obtendo os elementos
+                            const toastBtnId = "toastBtn_" + produto.id_carta;
+                            const toastTrigger = document.getElementById('toastBtnId')
+                            const toastLiveExample = document.getElementById('liveToast')
+
+                            const toastBootstrap = new bootstrap.Toast(toastLiveExample);
+                            toastBootstrap.show();
                         });
                     });
 
+
                 </script>
+
     </body>
 
     </html>
-    

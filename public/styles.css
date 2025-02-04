@@ -56,8 +56,8 @@ body {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
+/* menu lateral */
 .btn-toggle {
-  background-color: #f8f9fa;
   border: none;
   font-weight: bold;
 }
@@ -199,7 +199,43 @@ body::before {
   color: #ffffff;
 }
 
-.custom-tooltip {
-  --bs-tooltip-bg: var(--bd-violet-bg);
-  --bs-tooltip-color: var(--bs-white);
+/* Modal Login */
+.modal-content {
+  background: #fffffc; /* Gradiente horizontal */
+  color: white;
+  border-radius: 8px; /* Bordas arredondadas */
+  border: 2px solid #d4c81d; /* Cor da borda */
+}
+
+.modal-header {
+  background: linear-gradient(#d4c81d, #fffffc); /* Gradiente horizontal */
+  color: rgb(0, 0, 0); /* Cor do texto do cabeçalho */
+}
+
+.modal-body {
+  color: #333; /* Cor do texto no corpo do modal */
+}
+
+.modal-footer {
+  background-color: #f1f1f1; /* Cor de fundo do rodapé do modal */
+}
+
+.btn-custom-primary {
+  background-color: #d4c81d; /* Cor do botão primário */
+  color: white;
+  border: none;
+}
+
+.btn-custom-secondary {
+  background-color: #6c757d; /* Cor do botão secundário */
+  color: white;
+  border: none;
+}
+
+.btn-custom-primary:hover {
+  background-color: #9c9316; /* Cor de hover do botão primário */
+}
+
+.btn-custom-secondary:hover {
+  background-color: #5a6268; /* Cor de hover do botão secundário */
 }
